@@ -14,6 +14,8 @@ string toStandard       (string palindrome);
 int main() {
     bool quit = false;
     char choice;
+    string phrase;
+
     do {
         cout << "Welcome to Palindromes-R-Us!" << endl;
         cout << "Select an option" << endl;
@@ -31,7 +33,13 @@ int main() {
 
         switch(choice) {
             case '1':
-                cout << "Entered 1" << endl;
+                cout << "Enter a string: ";
+                cin >> phrase;
+                if(recognizer(phrase)) {
+                    cout << phrase << " is a palindrome" << endl;
+                } else {
+                    cout << phrase << " is not a palindrome" << endl;
+                }
                 break;
             case '2':
                 cout << "Entered 2" << endl;
@@ -54,3 +62,30 @@ int main() {
         cout << endl;
     } while(!quit);
 }
+
+bool recognizer(string palindrome) {
+    cout << "Palindrome length is " << palindrome.length() << endl;
+    for(int i = 0; i < palindrome.length() / 2; i++) {
+        if(palindrome[i] != palindrome[palindrome.length() - 1 - i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+string decorruptionator(string palindrome) {
+
+}
+
+bool detective(string palindrome) {
+
+}
+
+string cipher(string palindrome) {
+
+}
+
+string decipher(string palindrome) {
+
+}
+
