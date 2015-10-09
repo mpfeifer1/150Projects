@@ -96,7 +96,7 @@ string decipher(string palindrome) {
 }
 
 string toStandard(string palindrome) {
-    remove_if(palindrome.begin(), palindrome.end(), isspace);
+    palindrome.erase(remove_if(palindrome.begin(), palindrome.end(), ::isspace), palindrome.end());
     return palindrome;
 }
 
