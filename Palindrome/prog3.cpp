@@ -97,6 +97,7 @@ string decipher(string palindrome) {
 
 string toStandard(string palindrome) {
     palindrome.erase(remove_if(palindrome.begin(), palindrome.end(), ::isspace), palindrome.end());
+    palindrome.erase(remove_if(palindrome.begin(), palindrome.end(), ::ispunct), palindrome.end());
     return palindrome;
 }
 
