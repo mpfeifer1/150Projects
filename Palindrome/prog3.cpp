@@ -58,6 +58,9 @@ int main() {
                 cout << "Goodbye!" << endl;
                 quit = true;
                 break;
+            default:
+                cout << "Invalid option" << endl;
+                break;
         }
 
         cout << endl;
@@ -92,13 +95,12 @@ string decipher(string palindrome) {
 }
 
 string toStandard(string palindrome) {
-    
+    return "test";
 }
 
 string getInput() {
     string input;
-    do {
-        
-    } while();
+    cin.ignore();
+    getline(cin, input);
     return input;
 }
