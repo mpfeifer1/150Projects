@@ -95,7 +95,7 @@ string decipher(string palindrome) {
 }
 
 string toStandard(string palindrome) {
-    return "test";
+    return "test"; // Ignore spaces, punctuation, capitalization
 }
 
 string getInput() {
