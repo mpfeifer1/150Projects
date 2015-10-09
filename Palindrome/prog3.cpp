@@ -64,6 +64,7 @@ int main() {
 }
 
 bool recognizer(string palindrome) {
+    palindrome = toStandard(palindrome);
     cout << "Palindrome length is " << palindrome.length() << endl;
     for(int i = 0; i < palindrome.length() / 2; i++) {
         if(palindrome[i] != palindrome[palindrome.length() - 1 - i]) {
@@ -89,3 +90,6 @@ string decipher(string palindrome) {
 
 }
 
+string toStandard(string palindrome) {
+
+}
