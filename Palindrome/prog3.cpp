@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 
@@ -95,7 +96,8 @@ string decipher(string palindrome) {
 }
 
 string toStandard(string palindrome) {
-    return "test"; // Ignore spaces, punctuation, capitalization
+    remove_if(palindrome.begin(), palindrome.end(), isspace);
+    return palindrome;
 }
 
 string getInput() {
