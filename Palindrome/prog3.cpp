@@ -10,6 +10,7 @@ string cipher           (string palindrome);
 string decipher         (string palindrome);
 
 string toStandard       (string palindrome);
+string getInput         ();
 
 int main() {
     bool quit = false;
@@ -34,7 +35,7 @@ int main() {
         switch(choice) {
             case '1':
                 cout << "Enter a string: ";
-                cin >> phrase;
+                phrase = getInput();
                 if(recognizer(phrase)) {
                     cout << phrase << " is a palindrome" << endl;
                 } else {
@@ -91,5 +92,13 @@ string decipher(string palindrome) {
 }
 
 string toStandard(string palindrome) {
+    
+}
 
+string getInput() {
+    string input;
+    do {
+        
+    } while();
+    return input;
 }
