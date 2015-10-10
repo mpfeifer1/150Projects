@@ -65,7 +65,7 @@ int main() {
             case '5':
                 cout << "Enter a string: ";
                 phrase = getInput();
-                cout << "Palindromic decipher compxlete: " << decipher(toStandard(phrase)) << endl;
+                cout << "Palindromic decipher complete: " << decipher(toStandard(phrase)) << endl;
                 break;
 
                 break;
