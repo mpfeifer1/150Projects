@@ -57,7 +57,7 @@ int main() {
                 cout << "Enter a string: ";
                 phrase = getInput();
                 if(recognizer(phrase)) {
-                    cout << "Palindrome cipher complete: " << cipher(phrase) << endl;
+                    cout << "Palindrome cipher complete: " << cipher(toStandard(phrase)) << endl;
                 } else {
                     cout << phrase << " is not a palindrome" << endl;
                 }
@@ -65,7 +65,7 @@ int main() {
             case '5':
                 cout << "Enter a string: ";
                 phrase = getInput();
-                cout << "Palindromic decipher compxlete: " << decipher(phrase) << endl;
+                cout << "Palindromic decipher compxlete: " << decipher(toStandard(phrase)) << endl;
                 break;
 
                 break;
