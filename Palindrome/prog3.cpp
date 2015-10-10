@@ -98,7 +98,7 @@ bool detective(string palindrome) {
 
 string cipher(string palindrome) {
     for(int i = 0; i < palindrome.length(); i++) {
-        palindrome.replace(i, i, getNextLetter(palindrome.at(i)));
+        palindrome.replace(i, 1, getNextLetter(palindrome.at(i)));
     }
     return palindrome;
 }
