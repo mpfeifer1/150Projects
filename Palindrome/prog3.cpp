@@ -4,14 +4,17 @@
 
 using namespace std;
 
-bool   recognizer       (string palindrome);
-string decorruptionator (string palindrome);
-bool   detective        (string palindrome);
-string cipher           (string palindrome);
-string decipher         (string palindrome);
+bool   recognizer        (string palindrome);
+string decorruptionator  (string palindrome);
+bool   detective         (string palindrome);
+string cipher            (string palindrome);
+string decipher          (string palindrome);
 
-string toStandard       (string palindrome);
-string getInput         ();
+string toStandard        (string palindrome);
+string getInput          ();
+
+string getNextLetter     (string letter);
+string getPreviousLetter (string letter);
 
 int main() {
     bool quit = false;
@@ -80,11 +83,11 @@ bool recognizer(string palindrome) {
 }
 
 string decorruptionator(string palindrome) {
-
+    // Find all odd letters, and two center letters. Check if (temporarily) removing any one makes it a palindrome
 }
 
 bool detective(string palindrome) {
-
+    // Count all letters, if all are even (except one), return true
 }
 
 string cipher(string palindrome) {
@@ -107,4 +110,68 @@ string getInput() {
     cin.ignore();
     getline(cin, input);
     return input;
+}
+
+string getNextLetter(string letter) {
+    switch(letter) {
+        case "a":
+            return "b";
+        case "b":
+            return "c";
+        case "c":
+            return "d";
+        case "d":
+            return "e";
+        case "e":
+            return "f";
+        case "f":
+            return "g";
+        case "g":
+            return "h";
+        case "h":
+            return "i";
+        case "i":
+            return "j";
+        case "j":
+            return "k";
+        case "k":
+            return "l";
+        case "l":
+            return "m";
+        case "m":
+            return "n";
+        case "n":
+            return "o";
+        case "o":
+            return "p";
+        case "p":
+            return "q";
+        case "q":
+            return "r";
+        case "r":
+            return "s";
+        case "s":
+            return "t";
+        case "t":
+            return "u";
+        case "u":
+            return "v";
+        case "v":
+            return "w";
+        case "w":
+            return "x";
+        case "x":
+            return "y";
+        case "y":
+            return "z";
+        case "z":
+            return "a";
+        default:
+            cout << "getNextLetter hit default" << endl;
+            return "a";
+    }
+}
+
+string getPreviousLetter(string letter) {
+
 }
