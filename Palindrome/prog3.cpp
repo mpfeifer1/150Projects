@@ -13,8 +13,8 @@ string decipher          (string palindrome);
 string toStandard        (string palindrome);
 string getInput          ();
 
-string getNextLetter     (string letter);
-string getPreviousLetter (string letter);
+string getNextLetter     (char letter);
+string getPreviousLetter (char letter);
 
 int main() {
     bool quit = false;
@@ -41,7 +41,8 @@ int main() {
                 cout << "Enter a string: ";
                 phrase = getInput();
                 if(recognizer(phrase)) {
-                    cout << "Palindrome cipher complete: " << cipher(phrase) << endl;
+                    cout << phrase << " is a palindrome" << endl;
+
                 } else {
                     cout << phrase << " is not a palindrome" << endl;
                 }
@@ -53,17 +54,16 @@ int main() {
                 cout << "Entered 3" << endl;
                 break;
             case '4':
-                cout << "Entered 4" << endl;
-                break;
-            case '5':
                 cout << "Enter a string: ";
                 phrase = getInput();
                 if(recognizer(phrase)) {
-                    cout << phrase << " is a palindrome" << endl;
+                    cout << "Palindrome cipher complete: " << cipher(phrase) << endl;
                 } else {
                     cout << phrase << " is not a palindrome" << endl;
                 }
-
+                break;
+            case '5':
+                cout << "Entered 5" << endl;
                 break;
             case '6':
                 cout << "Goodbye!" << endl;
@@ -99,7 +99,7 @@ bool detective(string palindrome) {
 
 string cipher(string palindrome) {
     for(int i = 0; i < palindrome.length(); i++) {
-
+        palindrome.replace(i, i + 1, getNextLetter(palindrome.at(i)));
     }
     return palindrome;
 }
@@ -122,59 +122,59 @@ string getInput() {
     return input;
 }
 
-string getNextLetter(string letter) {
+string getNextLetter(char letter) {
     switch(letter) {
-        case "a":
+        case 'a':
             return "b";
-        case "b":
+        case 'b':
             return "c";
-        case "c":
+        case 'c':
             return "d";
-        case "d":
+        case 'd':
             return "e";
-        case "e":
+        case 'e':
             return "f";
-        case "f":
+        case 'f':
             return "g";
-        case "g":
+        case 'g':
             return "h";
-        case "h":
+        case 'h':
             return "i";
-        case "i":
+        case 'i':
             return "j";
-        case "j":
+        case 'j':
             return "k";
-        case "k":
+        case 'k':
             return "l";
-        case "l":
+        case 'l':
             return "m";
-        case "m":
+        case 'm':
             return "n";
-        case "n":
+        case 'n':
             return "o";
-        case "o":
+        case 'o':
             return "p";
-        case "p":
+        case 'p':
             return "q";
-        case "q":
+        case 'q':
             return "r";
-        case "r":
+        case 'r':
             return "s";
-        case "s":
+        case 's':
             return "t";
-        case "t":
+        case 't':
             return "u";
-        case "u":
+        case 'u':
             return "v";
-        case "v":
+        case 'v':
             return "w";
-        case "w":
+        case 'w':
             return "x";
-        case "x":
+        case 'x':
             return "y";
-        case "y":
+        case 'y':
             return "z";
-        case "z":
+        case 'z':
             return "a";
         default:
             cout << "getNextLetter hit default" << endl;
@@ -182,59 +182,59 @@ string getNextLetter(string letter) {
     }
 }
 
-string getPreviousLetter(string letter) {
+string getPreviousLetter(char letter) {
     switch(letter) {
-        case "a":
+        case 'a':
             return "z";
-        case "b":
+        case 'b':
             return "a";
-        case "c":
+        case 'c':
             return "b";
-        case "d":
+        case 'd':
             return "c";
-        case "e":
+        case 'e':
             return "d";
-        case "f":
+        case 'f':
             return "e";
-        case "g":
+        case 'g':
             return "f";
-        case "h":
+        case 'h':
             return "g";
-        case "i":
+        case 'i':
             return "h";
-        case "j":
+        case 'j':
             return "i";
-        case "k":
+        case 'k':
             return "j";
-        case "l":
+        case 'l':
             return "k";
-        case "m":
+        case 'm':
             return "l";
-        case "n":
+        case 'n':
             return "m";
-        case "o":
+        case 'o':
             return "n";
-        case "p":
+        case 'p':
             return "o";
-        case "q":
+        case 'q':
             return "p";
-        case "r":
+        case 'r':
             return "q";
-        case "s":
+        case 's':
             return "r";
-        case "t":
+        case 't':
             return "s";
-        case "u":
+        case 'u':
             return "t";
-        case "v":
+        case 'v':
             return "u";
-        case "w":
+        case 'w':
             return "v";
-        case "x":
+        case 'x':
             return "w";
-        case "y":
+        case 'y':
             return "x";
-        case "z":
+        case 'z':
             return "y";
         default:
             cout << "getPreviousLetter hit default" << endl;
