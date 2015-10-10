@@ -41,7 +41,7 @@ int main() {
                 cout << "Enter a string: ";
                 phrase = getInput();
                 if(recognizer(phrase)) {
-                    cout << phrase << " is a palindrome" << endl;
+                    cout << "Palindrome cipher complete: " << cipher(phrase) << endl;
                 } else {
                     cout << phrase << " is not a palindrome" << endl;
                 }
@@ -56,7 +56,14 @@ int main() {
                 cout << "Entered 4" << endl;
                 break;
             case '5':
-                cout << "Entered 5" << endl;
+                cout << "Enter a string: ";
+                phrase = getInput();
+                if(recognizer(phrase)) {
+                    cout << phrase << " is a palindrome" << endl;
+                } else {
+                    cout << phrase << " is not a palindrome" << endl;
+                }
+
                 break;
             case '6':
                 cout << "Goodbye!" << endl;
@@ -91,7 +98,10 @@ bool detective(string palindrome) {
 }
 
 string cipher(string palindrome) {
+    for(int i = 0; i < palindrome.length(); i++) {
 
+    }
+    return palindrome;
 }
 
 string decipher(string palindrome) {
