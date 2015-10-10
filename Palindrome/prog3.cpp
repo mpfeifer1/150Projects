@@ -97,8 +97,13 @@ bool detective(string palindrome) {
 }
 
 string cipher(string palindrome) {
-    for(int i = 0; i < palindrome.length(); i++) {
-        palindrome.replace(i, 1, getNextLetter(palindrome.at(i)));
+    int rotations;
+    cout << "Enter rotation distance (1-25): ";
+    cin >> rotations;
+    for(int j = 0; j < rotations; j++) {
+        for(int i = 0; i < palindrome.length(); i += 2) {
+            palindrome.replace(i, 1, getPreviousLetter(palindrome.at(i)));
+        }
     }
     return palindrome;
 }
