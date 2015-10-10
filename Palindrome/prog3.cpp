@@ -80,7 +80,6 @@ int main() {
 
 bool recognizer(string palindrome) {
     palindrome = toStandard(palindrome);
-    cout << "Palindrome length is " << palindrome.length() << endl;
     for(int i = 0; i < palindrome.length() / 2; i++) {
         if(palindrome[i] != palindrome[palindrome.length() - 1 - i]) {
             return false;
@@ -99,7 +98,7 @@ bool detective(string palindrome) {
 
 string cipher(string palindrome) {
     for(int i = 0; i < palindrome.length(); i++) {
-        palindrome.replace(i, i + 1, getNextLetter(palindrome.at(i)));
+        palindrome.replace(i, i, getNextLetter(palindrome.at(i)));
     }
     return palindrome;
 }
