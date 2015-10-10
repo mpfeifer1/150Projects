@@ -98,6 +98,9 @@ string decorruptionator(string palindrome) {
 
 bool detective(string palindrome) {
     // Count all letters, if all are even (except one), return true
+    int oddcount = 0;
+
+    return oddCount < 2;
 }
 
 string cipher(string palindrome) {
