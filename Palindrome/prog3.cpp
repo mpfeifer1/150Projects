@@ -63,7 +63,11 @@ int main() {
                 }
                 break;
             case '5':
-                cout << "Entered 5" << endl;
+                cout << "Enter a string: ";
+                phrase = getInput();
+                cout << "Palindromic decipher compxlete: " << decipher(phrase) << endl;
+                break;
+
                 break;
             case '6':
                 cout << "Goodbye!" << endl;
@@ -109,6 +113,15 @@ string cipher(string palindrome) {
 }
 
 string decipher(string palindrome) {
+    int rotations;
+    cout << "Enter rotation distance (1-25): ";
+    cin >> rotations;
+    for(int j = 0; j < rotations; j++) {
+        for(int i = 0; i < palindrome.length(); i += 2) {
+            palindrome.replace(i, 1, getNextLetter(palindrome.at(i)));
+        }
+    }
+    return palindrome;
 
 }
 
