@@ -173,5 +173,62 @@ string getNextLetter(string letter) {
 }
 
 string getPreviousLetter(string letter) {
+    switch(letter) {
+        case "a":
+            return "z";
+        case "b":
+            return "a";
+        case "c":
+            return "b";
+        case "d":
+            return "c";
+        case "e":
+            return "d";
+        case "f":
+            return "e";
+        case "g":
+            return "f";
+        case "h":
+            return "g";
+        case "i":
+            return "h";
+        case "j":
+            return "i";
+        case "k":
+            return "j";
+        case "l":
+            return "k";
+        case "m":
+            return "l";
+        case "n":
+            return "m";
+        case "o":
+            return "n";
+        case "p":
+            return "o";
+        case "q":
+            return "p";
+        case "r":
+            return "q";
+        case "s":
+            return "r";
+        case "t":
+            return "s";
+        case "u":
+            return "t";
+        case "v":
+            return "u";
+        case "w":
+            return "v";
+        case "x":
+            return "w";
+        case "y":
+            return "x";
+        case "z":
+            return "y";
+        default:
+            cout << "getPreviousLetter hit default" << endl;
+            return "z";
+    }
 
 }
