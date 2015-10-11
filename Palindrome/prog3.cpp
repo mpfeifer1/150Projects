@@ -48,7 +48,15 @@ int main() {
                 }
                 break;
             case '2':
-                cout << "Entered 2" << endl;
+                cout << "Enter a string: ";
+                phrase = getInput();
+                if(recognizer(phrase)) {
+                    cout << phrase << " is already a palindrome" << endl;
+                } else if(decorruptionator(phrase) != "") {
+                    cout << "The decorrupted palindrome is " << decorruptionator(phrase) << endl;
+                } else {
+                    cout << "This palindrome can't be decorrupted" << endl;;
+                }
                 break;
             case '3':
                 cout << "Entered 3" << endl;
@@ -77,7 +85,6 @@ int main() {
                 cout << "Invalid option" << endl;
                 break;
         }
-
         cout << endl;
     } while(!quit);
 }
@@ -93,12 +100,19 @@ bool recognizer(string palindrome) {
 }
 
 string decorruptionator(string palindrome) {
-    // Find all odd letters, and two center letters. Check if (temporarily) removing any one makes it a palindrome
+    string original = palindrome;
+    for(int i = 0; i < palindrome.length(); i++) {
+        palindrome = original;
+        if(recognizer(palindrome.erase(i, 1))) {
+            return palindrome;
+        }
+    }
+    return "";
 }
 
 bool detective(string palindrome) {
     // Count all letters, if all are even (except one), return true
-    int oddcount = 0;
+    int oddCount = 0;
 
     return oddCount < 2;
 }
