@@ -59,7 +59,7 @@ int main() {
                 }
                 break;
             case '3':
-                cout << "Entered 3" << endl;
+                cout << detective("aaabb") << endl;
                 break;
             case '4':
                 cout << "Enter a string: ";
@@ -113,7 +113,11 @@ string decorruptionator(string palindrome) {
 bool detective(string palindrome) {
     // Count all letters, if all are even (except one), return true
     int oddCount = 0;
-
+    char index = 'a';
+    for(int counter; counter < 26; counter++) {
+        cout << index << endl;
+        index = getNextLetter(index)[0];
+    }
     return oddCount < 2;
 }
 
