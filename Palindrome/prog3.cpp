@@ -40,7 +40,7 @@
  * @par Modifications and Development Timeline:
    @verbatim
    Date          Modification
-   ------------  -------------------------------------------------------------- 
+   ------------  --------------------------------------------------------------
    Oct 10, 2015  Worked on Doxygen documentation
    @endverbatim
  *
@@ -199,7 +199,7 @@ bool recognizer(string palindrome) {
  *****************************************************************************/
 string decorruptionator(string palindrome) {
     string original = palindrome; // So that palindrome.erase doesn't wreck the origonal copy
-    for(int i = 0; i < palindrome.length(); i++) {
+    for(int i = 0; i <= palindrome.length(); i++) {
         palindrome = original;
         if(recognizer(palindrome.erase(i, 1))) { // Tests if the string is a palindrome without the Ith character
             return palindrome;
