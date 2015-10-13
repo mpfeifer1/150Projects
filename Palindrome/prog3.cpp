@@ -59,7 +59,13 @@ int main() {
                 }
                 break;
             case '3':
-                cout << detective("aaabb") << endl;
+                cout << "Enter a string: ";
+                phrase = getInput();
+                if(detective(phrase)) {
+                    cout << "This can be a palindrome" << endl;
+                } else {
+                    cout << "This can't be a palindrome" << endl;
+                }
                 break;
             case '4':
                 cout << "Enter a string: ";
@@ -115,7 +121,16 @@ bool detective(string palindrome) {
     int oddCount = 0;
     char index = 'a';
     for(int counter; counter < 26; counter++) {
-        cout << index << endl;
+        // Count instances of letter
+        int instances = 0;
+        for(int i = 0; i < palindrome.length(); i++) {
+            if(index == palindrome[i]) {
+                instances++;
+            }
+        }
+        if(instances % 2 == 1) {
+            oddCount++;
+        }
         index = getNextLetter(index)[0];
     }
     return oddCount < 2;
