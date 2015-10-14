@@ -41,7 +41,11 @@
    @verbatim
    Date          Modification
    ------------  --------------------------------------------------------------
-   Oct 10, 2015  Worked on Doxygen documentation
+   Oct  9, 2015  Made menu, toStandard, getInput, started cipher
+   Oct 10, 2015  Finished cipher and decipher, debugged methods
+   Oct 11, 2015  Finished decorruptionator, started detective
+   Oct 12, 2015  Completed detective, debugged more methods
+   Oct 13, 2015  Completed project, added Doxygen documentation
    @endverbatim
  *
  *****************************************************************************/
