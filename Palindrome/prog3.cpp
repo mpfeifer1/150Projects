@@ -214,15 +214,24 @@ bool recognizer(char palindrome[], int length) {
  *
  *****************************************************************************/
 void decorruptionator(char palindrome[], int length) {
-    //char original[] = palindrome; // So that palindrome.erase doesn't wreck the origonal copy
-    for(int i = 0; i <= length; i++) {
-        //palindrome = original;
-        //if(recognizer(palindrome.erase(i, 1), length)) { // Tests if the string is a palindrome without the Ith character
-            // return palindrome;
-            //break;
-        //}
+    char original[] = {'\0'}; // Makes a copy so that palindrome.erase doesn't wreck the origonal copy
+    for(int i = 0; i < length; i++) {
+        original[i] = palindrome[i];
     }
-    // return "";
+
+    for(int i = 0; i <= length; i++) {
+        for(int j = 0; j < length; j++) { // Restores copy
+            palindrome[i] = original[i];
+        }
+        remove(palindrome, length, i);
+        if(recognizer(palindrome, length)) { // Tests if the string is a palindrome without the Ith character
+            return;
+        }
+    }
+
+    for(int i = 0; i < length; i++) { // Restores copy
+        palindrome[i] = original[i];
+    }
 }
 
 
@@ -361,7 +370,7 @@ int remove(char palindrome[], int length, int index) {
     for(int i = index; i < length; i++) {
         palindrome[i] = palindrome[i + 1];
     }
-    return length--;
+    return length - 1;
 }
 
 
