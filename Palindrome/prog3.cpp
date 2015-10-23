@@ -66,8 +66,9 @@ bool detective          (char palindrome[], int length);
 void cipher             (char palindrome[], int length);
 void decipher           (char palindrome[], int length);
 
-void toStandard         (char palindrome[], int length);
+int  toStandard         (char palindrome[], int length);
 int  getInput           (char palindrome[]);
+int  remove             (char palindrome[], int length, int index);
 
 char getNextLetter      (char letter);
 char getPreviousLetter  (char letter);
@@ -87,7 +88,7 @@ int main() {
     bool quit = false;
     char choice;
     char phrase[81] = {'\0'};
-    int length;
+    int  length;
 
     do {
         // Output main menu
@@ -132,6 +133,7 @@ int main() {
                     } else {
                         cout << "This palindrome can't be decorrupted" << endl;
                     }
+
                 }
                 break;
 
@@ -188,7 +190,7 @@ int main() {
  *
  *****************************************************************************/
 bool recognizer(char palindrome[], int length) {
-    toStandard(palindrome, length);
+    length = toStandard(palindrome, length);
     for(int i = 0; i < length / 2; i++) {
         // Tests if first equals last, 2nd equals 2nd to last, etc...
         if(palindrome[i] != palindrome[length - 1 - i]) {
@@ -317,9 +319,17 @@ void decipher(char palindrome[], int length) {
  * @returns     [string]    - the new palindrome
  *
  *****************************************************************************/
-void toStandard(char palindrome[], int length) {
+int toStandard(char palindrome[], int length) {
     // Erases spaces, punctuation, and makes lowercase
-    // palindrome = remove(begin(palindrome), end(palindrome), ::isspace());
+    for(int i = 0; i < length; i++) {
+        palindrome[i] = tolower(palindrome[i]);
+        if(isspace(palindrome[i]) || ispunct(palindrome[i])) {
+            remove(palindrome, length, i);
+            length--;
+            i--;
+        }
+    }
+    return length;
 }
 
 
@@ -344,6 +354,14 @@ int getInput(char palindrome[]) {
     }
 
     return -1; // Error Case
+}
+
+
+int remove(char palindrome[], int length, int index) {
+    for(int i = index; i < length; i++) {
+        palindrome[i] = palindrome[i + 1];
+    }
+    return length--;
 }
 
 
