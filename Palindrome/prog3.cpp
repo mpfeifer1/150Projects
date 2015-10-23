@@ -69,6 +69,7 @@ void decipher           (char palindrome[], int length);
 int  toStandard         (char palindrome[], int length);
 int  getInput           (char palindrome[]);
 int  remove             (char palindrome[], int length, int index);
+void copy               (char original[], char duplicate[], int length);
 
 char getNextLetter      (char letter);
 char getPreviousLetter  (char letter);
@@ -90,6 +91,8 @@ int main() {
     char phrase[81] = {'\0'};
     int  length;
 
+    char test[5] = "b!ob";
+
     do {
         // Output main menu
         cout << "Welcome to Palindromes-R-Us!" << endl;
@@ -110,7 +113,7 @@ int main() {
         // Break away based on selection
         switch(choice) {
 
-            case '1': { // Recognizer
+            case '1': // Recognizer
                 cout << "Enter a string: ";
                 length = getInput(phrase);
                 if(recognizer(phrase, length)) {
@@ -120,9 +123,8 @@ int main() {
                     cout << phrase << " is not a palindrome" << endl;
                 }
                 break;
-            }
 
-            case '2': { // Decorruptionator
+            case '2': // Decorruptionator
                 cout << "Enter a string: ";
                 length = getInput(phrase);
                 if(recognizer(phrase, length)) {
@@ -137,9 +139,8 @@ int main() {
 
                 }
                 break;
-            }
 
-            case '3': { // Detective
+            case '3': // Detective
                 cout << "Enter a string: ";
                 length = getInput(phrase);
                 if(detective(phrase, length)) {
@@ -148,46 +149,40 @@ int main() {
                     cout << "This can't be a palindrome" << endl;
                 }
                 break;
-            }
 
-            case '4': { // Cipher
+            case '4': // Cipher
                 cout << "Enter a string: ";
                 length = getInput(phrase);
                 toStandard(phrase, length);
                 cipher(phrase, length);
                 cout << "Palindrome cipher complete: " << phrase << endl;
                 break;
-            }
 
-            case '5': { // Decipher
+            case '5': // Decipher
                 cout << "Enter a string: ";
                 length = getInput(phrase);
                 toStandard(phrase, length);
                 decipher(phrase, length);
                 cout << "Palindromic decipher complete: " << phrase << endl;
                 break;
-            }
 
-            case '6': { // Quit
+            case '6': // Quit
                 cout << "Goodbye!" << endl;
                 quit = true;
                 break;
-            }
 
-            case '7': { // Debugging
-                char test[5] = "b!ob";
+            case '7':  // Debugging
                 cout << "The initial value of test is " << test << endl;
                 decorruptionator(test, 4);
                 //cout << "The new length of " << test << " after decorrupt is " << decorruptionator(test, 4) << endl;
                 cout << "The new value of test is " << test << endl;
                 quit = true;
+                cout << "Here" << endl;
                 break;
-            }
 
-            default: { // Bad Input
+            default:  // Bad Input
                 cout << "Invalid option" << endl;
                 break;
-            }
         }
         cout << endl;
     } while(!quit);
@@ -231,26 +226,18 @@ bool recognizer(char palindrome[], int length) {
  *
  *****************************************************************************/
 void decorruptionator(char palindrome[], int length) {
-    char original[] = {'\0'}; // Makes a copy so that palindrome.erase doesn't wreck the origonal copy
-    for(int i = 0; i < length; i++) {
-        original[i] = palindrome[i];
-    }
+    char original[] = {'\0'};
+    copy(palindrome, original, length);
 
-    for(int i = 0; i <= length; i++) {
-        for(int j = 0; j < length; j++) { // Restores copy
-            palindrome[i] = original[i];
-        }
+    for(int i = 0; i < length; i++) {
+        copy(original, palindrome, length);
         remove(palindrome, length, i);
-        length--;
-        if(recognizer(palindrome, length)) { // Tests if the string is a palindrome without the Ith character
+        if(recognizer(palindrome, length - 1)) { // Tests if the string is a palindrome without the Ith character
             return;
         }
-        length++;
     }
 
-    for(int i = 0; i < length; i++) { // Restores copy
-        palindrome[i] = original[i];
-    }
+    copy(original, palindrome, length);
 }
 
 
@@ -391,6 +378,14 @@ int remove(char palindrome[], int length, int index) {
     }
     return length - 1;
 }
+
+void copy (char original[], char duplicate[], int length) {
+    for(int i = 0; i < length; i++) {
+        duplicate[i] = original[i];
+    }
+    duplicate[length + 1] = '\0';
+}
+
 
 
 /**************************************************************************//**
