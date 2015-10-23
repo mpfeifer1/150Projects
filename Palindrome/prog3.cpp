@@ -191,7 +191,7 @@ bool recognizer(char palindrome[], int length) {
     toStandard(palindrome, length);
     for(int i = 0; i < length / 2; i++) {
         // Tests if first equals last, 2nd equals 2nd to last, etc...
-        if(palindrome[i] != palindrome[length - i]) {
+        if(palindrome[i] != palindrome[length - 1 - i]) {
             return false;
         }
     }
@@ -319,7 +319,7 @@ void decipher(char palindrome[], int length) {
  *****************************************************************************/
 void toStandard(char palindrome[], int length) {
     // Erases spaces, punctuation, and makes lowercase
-    //palindrome = remove(begin(palindrome), end(palindrome), ::isspace());
+    // palindrome = remove(begin(palindrome), end(palindrome), ::isspace());
 }
 
 
@@ -333,7 +333,17 @@ void toStandard(char palindrome[], int length) {
  *
  *****************************************************************************/
 int getInput(char palindrome[]) {
+    cin.ignore();
     cin.getline(palindrome, 80); // Gets the whole line instead of one word
+
+    // Calculate Length
+    for(int i = 0; i <= 81; i++) {
+        if(palindrome[i] == '\0') {
+            return i;
+        }
+    }
+
+    return -1; // Error Case
 }
 
 
