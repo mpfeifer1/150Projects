@@ -110,7 +110,7 @@ int main() {
         // Break away based on selection
         switch(choice) {
 
-            case '1': // Recognizer
+            case '1': { // Recognizer
                 cout << "Enter a string: ";
                 length = getInput(phrase);
                 if(recognizer(phrase, length)) {
@@ -120,8 +120,9 @@ int main() {
                     cout << phrase << " is not a palindrome" << endl;
                 }
                 break;
+            }
 
-            case '2': // Decorruptionator
+            case '2': { // Decorruptionator
                 cout << "Enter a string: ";
                 length = getInput(phrase);
                 if(recognizer(phrase, length)) {
@@ -136,8 +137,9 @@ int main() {
 
                 }
                 break;
+            }
 
-            case '3': // Detective
+            case '3': { // Detective
                 cout << "Enter a string: ";
                 length = getInput(phrase);
                 if(detective(phrase, length)) {
@@ -146,31 +148,46 @@ int main() {
                     cout << "This can't be a palindrome" << endl;
                 }
                 break;
+            }
 
-            case '4': // Cipher
+            case '4': { // Cipher
                 cout << "Enter a string: ";
                 length = getInput(phrase);
                 toStandard(phrase, length);
                 cipher(phrase, length);
                 cout << "Palindrome cipher complete: " << phrase << endl;
                 break;
+            }
 
-            case '5': // Decipher
+            case '5': { // Decipher
                 cout << "Enter a string: ";
                 length = getInput(phrase);
                 toStandard(phrase, length);
                 decipher(phrase, length);
                 cout << "Palindromic decipher complete: " << phrase << endl;
                 break;
+            }
 
-            case '6': // Quit
+            case '6': { // Quit
                 cout << "Goodbye!" << endl;
                 quit = true;
                 break;
+            }
 
-            default: // Bad Input
+            case '7': { // Debugging
+                char test[5] = "b!ob";
+                cout << "The initial value of test is " << test << endl;
+                decorruptionator(test, 4);
+                //cout << "The new length of " << test << " after decorrupt is " << decorruptionator(test, 4) << endl;
+                cout << "The new value of test is " << test << endl;
+                quit = true;
+                break;
+            }
+
+            default: { // Bad Input
                 cout << "Invalid option" << endl;
                 break;
+            }
         }
         cout << endl;
     } while(!quit);
@@ -224,9 +241,11 @@ void decorruptionator(char palindrome[], int length) {
             palindrome[i] = original[i];
         }
         remove(palindrome, length, i);
+        length--;
         if(recognizer(palindrome, length)) { // Tests if the string is a palindrome without the Ith character
             return;
         }
+        length++;
     }
 
     for(int i = 0; i < length; i++) { // Restores copy
