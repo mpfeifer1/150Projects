@@ -191,7 +191,7 @@ bool recognizer(char palindrome[], int length) {
     toStandard(palindrome, length);
     for(int i = 0; i < length / 2; i++) {
         // Tests if first equals last, 2nd equals 2nd to last, etc...
-        if(palindrome[i] != palindrome[length() - i]) {
+        if(palindrome[i] != palindrome[length - i]) {
             return false;
         }
     }
@@ -212,13 +212,13 @@ bool recognizer(char palindrome[], int length) {
  *
  *****************************************************************************/
 void decorruptionator(char palindrome[], int length) {
-    char[] original = palindrome; // So that palindrome.erase doesn't wreck the origonal copy
+    //char original[] = palindrome; // So that palindrome.erase doesn't wreck the origonal copy
     for(int i = 0; i <= length; i++) {
-        palindrome = original;
-        if(recognizer(palindrome.erase(i, 1), length)) { // Tests if the string is a palindrome without the Ith character
+        //palindrome = original;
+        //if(recognizer(palindrome.erase(i, 1), length)) { // Tests if the string is a palindrome without the Ith character
             // return palindrome;
-            break;
-        }
+            //break;
+        //}
     }
     // return "";
 }
@@ -252,7 +252,7 @@ bool detective(char palindrome[], int length) {
         if(instances % 2 == 1) {
             oddCount++;
         }
-        index = getNextLetter(index)[0];
+        index = getNextLetter(index);
     }
     return oddCount < 2; // True if 0 or 1 odd number of character
 }
@@ -276,7 +276,7 @@ void cipher(char palindrome[], int length) {
     for(int j = 0; j < rotations; j++) {
         for(int i = 0; i < length; i += 2) { // Counts by two to modify every other character
             // Replaces i with the previous character j times
-            palindrome.replace(i, 1, getPreviousLetter(palindrome.at(i)));
+            palindrome[i] = getPreviousLetter(palindrome[i]);
         }
     }
 }
@@ -300,7 +300,7 @@ void decipher(char palindrome[], int length) {
     for(int j = 0; j < rotations; j++) {
         for(int i = 0; i < length; i += 2) { // Counts by two to modify every other character
             // Replaces i with the next character j times
-            palindrome.replace(i, 1, getNextLetter(palindrome.at(i)));
+            palindrome[i] = getNextLetter(palindrome[i]);
         }
     }
 }
@@ -319,9 +319,7 @@ void decipher(char palindrome[], int length) {
  *****************************************************************************/
 void toStandard(char palindrome[], int length) {
     // Erases spaces, punctuation, and makes lowercase
-    palindrome.erase(remove_if(palindrome.begin(), palindrome.end(), ::isspace), palindrome.end());
-    palindrome.erase(remove_if(palindrome.begin(), palindrome.end(), ::ispunct), palindrome.end());
-    transform(palindrome.begin(), palindrome.end(), palindrome.begin(), ::tolower);
+    //palindrome = remove(begin(palindrome), end(palindrome), ::isspace());
 }
 
 
