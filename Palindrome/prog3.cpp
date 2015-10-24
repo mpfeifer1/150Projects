@@ -7,7 +7,7 @@
  *
  * @author Michael Pfeifer
  *
- * @date 10/13/2015
+ * @date 10/23/2015
  *
  * @par Professor:
  *         Val Manes
@@ -47,6 +47,7 @@
    Oct 12, 2015  Completed detective, debugged more methods
    Oct 13, 2015  Completed project, added Doxygen documentation
    Oct 22, 2015  Converted everthing to c-style stings. Thanks for that BTW
+   Oct 23, 2015  Finished the project. For real this time.
    @endverbatim
  *
  *****************************************************************************/
@@ -185,10 +186,11 @@ int main() {
  * @par Description:
  * This function determines wheter a string is a palindrome
  *
- * @param[in]   palindrome  - the string to test
+ * @param[in][out]  palindrome  - the string to test
+ * @param[in]       length      - the length of the string
  *
- * @returns     true        - the input was a palindrome
- * @returns     false       - the input was not a palindrome
+ * @returns         true        - the input was a palindrome
+ * @returns         false       - the input was not a palindrome
  *
  *****************************************************************************/
 bool recognizer(char palindrome[], int length) {
@@ -209,10 +211,8 @@ bool recognizer(char palindrome[], int length) {
  * @par Description:
  * This function determines wheter a string is a palindrome, with one extra character
  *
- * @param[in]   palindrome  - the string to test
- *
- * @returns     ""          - the input cannot be made into a palindrome
- * @returns     [string]    - the input can be a palindrome, string contains a potential palindrome
+ * @param[in][out]  palindrome  - the string to test
+ * @param[in]       length      - the length of the string
  *
  *****************************************************************************/
 void decorruptionator(char palindrome[], int length) {
@@ -238,6 +238,7 @@ void decorruptionator(char palindrome[], int length) {
  * This function determines wheter a string is a scrambled up palindrome
  *
  * @param[in]   palindrome  - the string to test
+ * @param[in]   length      - the length of the string
  *
  * @returns     true        - the input can be a palindrome
  * @returns     false       - the input can not be a palindrome
@@ -271,9 +272,8 @@ bool detective(char palindrome[], int length) {
  * @par Description:
  * This function scrambles a palindrome using a cipher
  *
- * @param[in]   palindrome  - the string to scramble
- *
- * @returns     [string]    - the scrambled palindrome
+ * @param[in][out]  palindrome  - the string to scramble
+ * @param[in]       length      - the length of the string
  *
  *****************************************************************************/
 void cipher(char palindrome[], int length) {
@@ -295,9 +295,8 @@ void cipher(char palindrome[], int length) {
  * @par Description:
  * This function unscrambles a palindrome using a decipher
  *
- * @param[in]   palindrome  - the string to descramble
- *
- * @returns     [string]    - the unscrambled palindrome
+ * @param[in][out]  palindrome  - the string to descramble
+ * @param[in]       length      - the length of the string
  *
  *****************************************************************************/
 void decipher(char palindrome[], int length) {
@@ -319,9 +318,10 @@ void decipher(char palindrome[], int length) {
  * @par Description:
  * This function standardizes all input
  *
- * @param[in]   palindrome  - the palindrome to clean up
+ * @param[in][out]  palindrome  - the palindrome to clean up
+ * @param[in]       length      - the length of the palindrome
  *
- * @returns     [string]    - the new palindrome
+ * @returns         [int]       - the new length of the palindrome
  *
  *****************************************************************************/
 int toStandard(char palindrome[], int length) {
@@ -344,7 +344,10 @@ int toStandard(char palindrome[], int length) {
  * @par Description:
  * This function gets a line of input from the user
  *
- * @returns     [string]    - the line from the user, as a string
+ * @param[in][out]  palindrome  - the string to print to
+ *
+ * @returns         [int]       - the length of the palindrome
+ * @returns         -1          - error case
  *
  *****************************************************************************/
 int getInput(char palindrome[]) {
@@ -365,8 +368,13 @@ int getInput(char palindrome[]) {
  * @author Michael Pfeifer
  *
  * @par Description:
- * This function returns an index from a string
+ * This function removes an index from a string
  *
+ * @param[in][out]  palindrome  - the string to remove from
+ * @param[in]       length      - the length of the string
+ * @param[in]       index       - the index of the character to remove
+ *
+ * @returns         [int]       - the new length of the string
  *
  *****************************************************************************/
 int remove(char palindrome[], int length, int index) {
