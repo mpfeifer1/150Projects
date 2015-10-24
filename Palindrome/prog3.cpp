@@ -56,6 +56,7 @@
 #include <algorithm>
 #include <iostream>
 #include <cctype>
+#include <cstring>
 
 using namespace std;
 
@@ -131,7 +132,7 @@ int main() {
                     cout << phrase << " is already a palindrome" << endl;
                 } else {
                     decorruptionator(phrase, length);
-                    if(phrase != "") {
+                    if(phrase[0] != '\0') {
                         cout << "The decorrupted palindrome is " << phrase << endl;
                     } else {
                         cout << "This palindrome can't be decorrupted" << endl;
@@ -173,7 +174,7 @@ int main() {
 
             case '7':  // Debugging
                 cout << "The initial value of test is " << test << endl;
-                decorruptionator(test, 4);
+                remove(test, 4, 4);
                 //cout << "The new length of " << test << " after decorrupt is " << decorruptionator(test, 4) << endl;
                 cout << "The new value of test is " << test << endl;
                 quit = true;
@@ -226,18 +227,18 @@ bool recognizer(char palindrome[], int length) {
  *
  *****************************************************************************/
 void decorruptionator(char palindrome[], int length) {
-    char original[] = {'\0'};
-    copy(palindrome, original, length);
+    char original[81] = {'\0'};
+    strcpy(original, palindrome);
 
     for(int i = 0; i < length; i++) {
-        copy(original, palindrome, length);
+        strcpy(palindrome, original);
         remove(palindrome, length, i);
         if(recognizer(palindrome, length - 1)) { // Tests if the string is a palindrome without the Ith character
             return;
         }
     }
 
-    copy(original, palindrome, length);
+    palindrome[0] = '\0';
 }
 
 
@@ -378,14 +379,6 @@ int remove(char palindrome[], int length, int index) {
     }
     return length - 1;
 }
-
-void copy (char original[], char duplicate[], int length) {
-    for(int i = 0; i < length; i++) {
-        duplicate[i] = original[i];
-    }
-    duplicate[length + 1] = '\0';
-}
-
 
 
 /**************************************************************************//**
