@@ -92,8 +92,6 @@ int main() {
     char phrase[81] = {'\0'};
     int  length;
 
-    char test[5] = "b!ob";
-
     do {
         // Output main menu
         cout << "Welcome to Palindromes-R-Us!" << endl;
@@ -170,15 +168,6 @@ int main() {
             case '6': // Quit
                 cout << "Goodbye!" << endl;
                 quit = true;
-                break;
-
-            case '7':  // Debugging
-                cout << "The initial value of test is " << test << endl;
-                remove(test, 4, 4);
-                //cout << "The new length of " << test << " after decorrupt is " << decorruptionator(test, 4) << endl;
-                cout << "The new value of test is " << test << endl;
-                quit = true;
-                cout << "Here" << endl;
                 break;
 
             default:  // Bad Input
@@ -372,7 +361,14 @@ int getInput(char palindrome[]) {
     return -1; // Error Case
 }
 
-
+/**************************************************************************//**
+ * @author Michael Pfeifer
+ *
+ * @par Description:
+ * This function returns an index from a string
+ *
+ *
+ *****************************************************************************/
 int remove(char palindrome[], int length, int index) {
     for(int i = index; i < length; i++) {
         palindrome[i] = palindrome[i + 1];
