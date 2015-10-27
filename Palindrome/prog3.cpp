@@ -48,6 +48,7 @@
    Oct 13, 2015  Completed project, added Doxygen documentation
    Oct 22, 2015  Converted everthing to c-style stings. Thanks for that BTW
    Oct 23, 2015  Finished the project. For real this time.
+   Oct 27, 2017  Added more comments
    @endverbatim
  *
  *****************************************************************************/
@@ -71,7 +72,6 @@ void decipher           (char palindrome[], int length);
 int  toStandard         (char palindrome[], int length);
 int  getInput           (char palindrome[]);
 int  remove             (char palindrome[], int length, int index);
-void copy               (char original[], char duplicate[], int length);
 
 char getNextLetter      (char letter);
 char getPreviousLetter  (char letter);
@@ -89,8 +89,10 @@ char getPreviousLetter  (char letter);
 int main() {
     // Quit will keep the program looping until the user wants to quit
     bool quit = false;
+    // Stores user input
     char choice;
     char phrase[81] = {'\0'};
+    // Running length of string
     int  length;
 
     do {
@@ -127,9 +129,10 @@ int main() {
             case '2': // Decorruptionator
                 cout << "Enter a string: ";
                 length = getInput(phrase);
+                // Detects if already palindrome
                 if(recognizer(phrase, length)) {
                     cout << phrase << " is already a palindrome" << endl;
-                } else {
+                } else { // Determines if if can be decoruppted
                     decorruptionator(phrase, length);
                     if(phrase[0] != '\0') {
                         cout << "The decorrupted palindrome is " << phrase << endl;
@@ -143,6 +146,7 @@ int main() {
             case '3': // Detective
                 cout << "Enter a string: ";
                 length = getInput(phrase);
+                // Detects if it's a palindrome
                 if(detective(phrase, length)) {
                     cout << "This can be a palindrome" << endl;
                 } else {
@@ -216,9 +220,11 @@ bool recognizer(char palindrome[], int length) {
  *
  *****************************************************************************/
 void decorruptionator(char palindrome[], int length) {
+    // Backs up original string
     char original[81] = {'\0'};
     strcpy(original, palindrome);
 
+    // Guess-and-check by removing one character from string and detecting if palindrome
     for(int i = 0; i < length; i++) {
         strcpy(palindrome, original);
         remove(palindrome, length, i);
@@ -277,6 +283,7 @@ bool detective(char palindrome[], int length) {
  *
  *****************************************************************************/
 void cipher(char palindrome[], int length) {
+    // Input rotations
     int rotations;
     cout << "Enter rotation distance (1-25): ";
     cin >> rotations;
@@ -300,6 +307,7 @@ void cipher(char palindrome[], int length) {
  *
  *****************************************************************************/
 void decipher(char palindrome[], int length) {
+    // Input rotations
     int rotations;
     cout << "Enter rotation distance (1-25): ";
     cin >> rotations;
@@ -378,6 +386,7 @@ int getInput(char palindrome[]) {
  *
  *****************************************************************************/
 int remove(char palindrome[], int length, int index) {
+    // Slides all characters after index to the left one
     for(int i = index; i < length; i++) {
         palindrome[i] = palindrome[i + 1];
     }
