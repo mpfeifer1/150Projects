@@ -229,7 +229,7 @@ void decorruptionator(char palindrome[], int length) {
         }
     }
 
-    palindrome[0] = '\0';
+    palindrome[0] = '\0'; // Sets string to "" if a palindrome isn't possible
 }
 
 
@@ -262,7 +262,7 @@ bool detective(char palindrome[], int length) {
         if(instances % 2 == 1) {
             oddCount++;
         }
-        index++;
+        index++; // Moves index to the next ascii letter
     }
     return oddCount < 2; // True if 0 or 1 odd number of character
 }
@@ -282,12 +282,12 @@ void cipher(char palindrome[], int length) {
     // Input rotations
     int rotations;
     do {
-    cout << "Enter rotation distance (1-25): ";
-    cin >> rotations;
+        cout << "Enter rotation distance (1-25): ";
+        cin >> rotations;
     } while(rotations < 0 || rotations > 25);
     for(int i = 0; i < length; i += 2) { // Counts by two to modify every other character
         palindrome[i] -= rotations;
-        if(palindrome[i] < 97) {
+        if(palindrome[i] < 'a') { // Checks if too low
             palindrome[i] += 26;
         }
     }
@@ -308,13 +308,13 @@ void decipher(char palindrome[], int length) {
     // Input rotations
     int rotations;
     do {
-    cout << "Enter rotation distance (1-25): ";
-    cin >> rotations;
+        cout << "Enter rotation distance (1-25): ";
+        cin >> rotations;
     } while(rotations < 0 || rotations > 25);
     for(int i = 0; i < length; i += 2) { // Counts by two to modify every other character
         // Replaces i with the next character j times
         palindrome[i] += rotations;
-        if(palindrome[i] > 122) {
+        if(palindrome[i] > 'z') { // Checks if too high
             palindrome[i] -= 26;
         }
     }
