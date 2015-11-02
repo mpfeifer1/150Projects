@@ -55,7 +55,6 @@
 
 
 // Preprocessor
-#include <algorithm>
 #include <iostream>
 #include <cctype>
 #include <cstring>
