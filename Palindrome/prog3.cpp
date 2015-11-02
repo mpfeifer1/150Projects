@@ -48,7 +48,8 @@
    Oct 13, 2015  Completed project, added Doxygen documentation
    Oct 22, 2015  Converted everthing to c-style stings. Thanks for that BTW
    Oct 23, 2015  Finished the project. For real this time.
-   Oct 27, 2017  Added more comments
+   Oct 27, 2015  Added more comments
+   Nov  1, 2015  Rewrote cipher and decipher
    @endverbatim
  *
  *****************************************************************************/
