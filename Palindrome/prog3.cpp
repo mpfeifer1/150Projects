@@ -73,10 +73,6 @@ int  toStandard         (char palindrome[], int length);
 int  getInput           (char palindrome[]);
 int  remove             (char palindrome[], int length, int index);
 
-char getNextLetter      (char letter);
-char getPreviousLetter  (char letter);
-
-
 /**************************************************************************//**
  * @author Michael Pfeifer
  *
@@ -266,7 +262,7 @@ bool detective(char palindrome[], int length) {
         if(instances % 2 == 1) {
             oddCount++;
         }
-        index = getNextLetter(index);
+        index++;
     }
     return oddCount < 2; // True if 0 or 1 odd number of character
 }
@@ -285,12 +281,14 @@ bool detective(char palindrome[], int length) {
 void cipher(char palindrome[], int length) {
     // Input rotations
     int rotations;
+    do {
     cout << "Enter rotation distance (1-25): ";
     cin >> rotations;
-    for(int j = 0; j < rotations; j++) {
-        for(int i = 0; i < length; i += 2) { // Counts by two to modify every other character
-            // Replaces i with the previous character j times
-            palindrome[i] = getPreviousLetter(palindrome[i]);
+    } while(rotations < 0 || rotations > 25);
+    for(int i = 0; i < length; i += 2) { // Counts by two to modify every other character
+        palindrome[i] -= rotations;
+        if(palindrome[i] < 97) {
+            palindrome[i] += 26;
         }
     }
 }
@@ -309,12 +307,15 @@ void cipher(char palindrome[], int length) {
 void decipher(char palindrome[], int length) {
     // Input rotations
     int rotations;
+    do {
     cout << "Enter rotation distance (1-25): ";
     cin >> rotations;
-    for(int j = 0; j < rotations; j++) {
-        for(int i = 0; i < length; i += 2) { // Counts by two to modify every other character
-            // Replaces i with the next character j times
-            palindrome[i] = getNextLetter(palindrome[i]);
+    } while(rotations < 0 || rotations > 25);
+    for(int i = 0; i < length; i += 2) { // Counts by two to modify every other character
+        // Replaces i with the next character j times
+        palindrome[i] += rotations;
+        if(palindrome[i] > 122) {
+            palindrome[i] -= 26;
         }
     }
 }
@@ -391,153 +392,4 @@ int remove(char palindrome[], int length, int index) {
         palindrome[i] = palindrome[i + 1];
     }
     return length - 1;
-}
-
-
-/**************************************************************************//**
- * @author Michael Pfeifer
- *
- * @par Description:
- * This function gets the next letter in the alphabet
- *
- * @param[in]   letter      - the initial letter
- *
- * @returns     [char]      - the following letter
- * @returns     a           - error case
- *
- *****************************************************************************/
-char getNextLetter(char letter) {
-    // Hard-coded next letter
-    switch(letter) {
-        case 'a':
-            return 'b';
-        case 'b':
-            return 'c';
-        case 'c':
-            return 'd';
-        case 'd':
-            return 'e';
-        case 'e':
-            return 'f';
-        case 'f':
-            return 'g';
-        case 'g':
-            return 'h';
-        case 'h':
-            return 'i';
-        case 'i':
-            return 'j';
-        case 'j':
-            return 'k';
-        case 'k':
-            return 'l';
-        case 'l':
-            return 'm';
-        case 'm':
-            return 'n';
-        case 'n':
-            return 'o';
-        case 'o':
-            return 'p';
-        case 'p':
-            return 'q';
-        case 'q':
-            return 'r';
-        case 'r':
-            return 's';
-        case 's':
-            return 't';
-        case 't':
-            return 'u';
-        case 'u':
-            return 'v';
-        case 'v':
-            return 'w';
-        case 'w':
-            return 'x';
-        case 'x':
-            return 'y';
-        case 'y':
-            return 'z';
-        case 'z':
-            return 'a';
-        default: // Error case
-            cout << "getNextLetter hit default" << endl;
-            return 'a';
-    }
-}
-
-
-/**************************************************************************//**
- * @author Michael Pfeifer
- *
- * @par Description:
- * This function gets the previous letter in the alphabet
- *
- * @param[in]   letter      - the initial letter
- *
- * @returns     [char]      - the previous letter
- * @returns     z           - error case
- *
- *****************************************************************************/
-char getPreviousLetter(char letter) {
-    // Hard-coded previous letter
-    switch(letter) {
-        case 'a':
-            return 'z';
-        case 'b':
-            return 'a';
-        case 'c':
-            return 'b';
-        case 'd':
-            return 'c';
-        case 'e':
-            return 'd';
-        case 'f':
-            return 'e';
-        case 'g':
-            return 'f';
-        case 'h':
-            return 'g';
-        case 'i':
-            return 'h';
-        case 'j':
-            return 'i';
-        case 'k':
-            return 'j';
-        case 'l':
-            return 'k';
-        case 'm':
-            return 'l';
-        case 'n':
-            return 'm';
-        case 'o':
-            return 'n';
-        case 'p':
-            return 'o';
-        case 'q':
-            return 'p';
-        case 'r':
-            return 'q';
-        case 's':
-            return 'r';
-        case 't':
-            return 's';
-        case 'u':
-            return 't';
-        case 'v':
-            return 'u';
-        case 'w':
-            return 'v';
-        case 'x':
-            return 'w';
-        case 'y':
-            return 'x';
-        case 'z':
-            return 'y';
-        default: // Error case
-            cout << "getPreviousLetter hit default" << endl;
-            return 'z';
-    }
-
 }
