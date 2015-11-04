@@ -335,15 +335,16 @@ void decipher(char palindrome[], int length) {
  *****************************************************************************/
 int toStandard(char palindrome[], int length) {
     // Erases spaces, punctuation, and makes lowercase
-    for(int i = 0; i < length; i++) {
-        palindrome[i] = tolower(palindrome[i]);
-        if(isspace(palindrome[i]) || ispunct(palindrome[i])) {
-            remove(palindrome, length, i);
-            length--;
-            i--;
+    char temp[81] = {'\0'};
+    int j = 0;
+    for(int i = 0; i < strlen(palindrome); i++) {
+        if((palindrome[i] >= 'a' &&  palindrome[i] <= 'z') || (palindrome [i] >= 'A' && palindrome[i] <= 'Z')) {
+            temp[j] = tolower(palindrome[i]);
+            j++;
         }
     }
-    return length;
+    strcpy(palindrome, temp);
+    return strlen(palindrome);
 }
 
 
