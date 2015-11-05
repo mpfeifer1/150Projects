@@ -50,6 +50,7 @@
    Oct 23, 2015  Finished the project. For real this time.
    Oct 27, 2015  Added more comments
    Nov  1, 2015  Rewrote cipher and decipher
+   Nov  4, 2015  Refactored to ASCII values, optimized toStandard
    @endverbatim
  *
  *****************************************************************************/
@@ -248,22 +249,20 @@ void decorruptionator(char palindrome[], int length) {
  *****************************************************************************/
 bool detective(char palindrome[], int length) {
     // Count all letters, if all are even (except one), return true
-    int oddCount = 0;
+    char alphabet[26] = {'\0'};
+    int oddCount = 0, i = 0;
     char index = 'a';
-    for(int counter; counter < 26; counter++) {
+
+    for(i = 0; i < length; i++) {
         // Count instances of letter
-        int instances = 0;
-        for(int i = 0; i < length; i++) {
-            if(index == palindrome[i]) {
-                instances++;
-            }
-        }
-        // Determine if there's an odd number of the character in the palindrome
-        if(instances % 2 == 1) {
+        alphabet[palindrome[i] - 'a']++;
+    }
+    for(i = 0; i < 26; i++) {
+        if(alphabet[i] % 2 == 1) {
             oddCount++;
         }
-        index++; // Moves index to the next ascii letter
     }
+
     return oddCount < 2; // True if 0 or 1 odd number of character
 }
 
