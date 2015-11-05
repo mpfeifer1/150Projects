@@ -249,15 +249,15 @@ void decorruptionator(char palindrome[], int length) {
  *****************************************************************************/
 bool detective(char palindrome[], int length) {
     // Count all letters, if all are even (except one), return true
-    char alphabet[26] = {'\0'};
+    char alphabet[26] = {'\0'}; // Array that stores count of all letters
     int oddCount = 0, i = 0;
-    char index = 'a';
 
     for(i = 0; i < length; i++) {
-        // Count instances of letter
+        // Count instances of every letter
         alphabet[palindrome[i] - 'a']++;
     }
     for(i = 0; i < 26; i++) {
+        // Counts all odd instances
         if(alphabet[i] % 2 == 1) {
             oddCount++;
         }
