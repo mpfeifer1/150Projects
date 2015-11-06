@@ -20,7 +20,10 @@
  *
  * @section program_section Program Information
  *
- * @details This program has 5 different options. It will detect whether a string is a palindrome, can fix a palindrome with an extra character inside, can detect if a palindrome is scrambled up, and can cipher/decipher palindromes
+ * @details This program has 5 different options. It will detect whether a
+            string is a palindrome, can fix a palindrome with an extra
+            character inside, can detect if a palindrome is scrambled up, and
+            can cipher/decipher palindromes
  *
  * @section compile_section Compiling and Usage
  *
@@ -51,7 +54,7 @@
    Oct 27, 2015  Added more comments
    Nov  1, 2015  Rewrote cipher and decipher
    Nov  4, 2015  Refactored to ASCII values, optimized toStandard
-   Nov  5, 2015  Fixed weird edge cases, like spaces in cipher and ASCII overflow in decipher
+   Nov  5, 2015  Fixed edge cases, like spaces in cipher and ASCII overflows
    @endverbatim
  *
  *****************************************************************************/
@@ -79,7 +82,8 @@ int  remove             (char palindrome[], int length, int index);
  * @author Michael Pfeifer
  *
  * @par Description:
- * This function outputs a main menu screen, and branches out to the various palindrome methods.
+ * This function outputs a main menu screen, and branches out to the various
+   palindrome methods.
  *
  * @returns     0               - program ran successful.
  *
@@ -133,7 +137,8 @@ int main() {
                 } else { // Determines if if can be decoruppted
                     decorruptionator(phrase, length);
                     if(phrase[0] != '\0') {
-                        cout << "The decorrupted palindrome is " << phrase << endl;
+                        cout << "The decorrupted palindrome is "
+                             << phrase << endl;
                     } else {
                         cout << "This palindrome can't be decorrupted" << endl;
                     }
@@ -217,7 +222,8 @@ bool recognizer(char palindrome[], int length) {
  * @author Michael Pfeifer
  *
  * @par Description:
- * This function determines wheter a string is a palindrome, with one extra character
+ * This function determines wheter a string is a palindrome,
+   with one extra character
  *
  * @param[in][out]  palindrome  - the string to test
  * @param[in]       length      - the length of the string
@@ -228,11 +234,12 @@ void decorruptionator(char palindrome[], int length) {
     char original[81] = {'\0'};
     strcpy(original, palindrome);
 
-    // Guess-and-check by removing one character from string and detecting if palindrome
+    // Guess-and-check by removing one character from string and detecting
     for(int i = 0; i < length; i++) {
         strcpy(palindrome, original);
         remove(palindrome, length, i);
-        if(recognizer(palindrome, length - 1)) { // Tests if the string is a palindrome without the Ith character
+        // Tests if the string is a palindrome without the Ith character
+        if(recognizer(palindrome, length - 1)) {
             return;
         }
     }
@@ -293,7 +300,8 @@ void cipher(char palindrome[], int length) {
         cin >> rotations;
     } while(rotations < 0 || rotations > 25);
     toStandard(palindrome, length);
-    for(int i = 0; i < length; i += 2) { // Counts by two to modify every other character
+    // Counts by two to modify every other character
+    for(int i = 0; i < length; i += 2) {
         palindrome[i] -= rotations;
         while(palindrome[i] < 'a') { // Checks if too low
             palindrome[i] += 26;
@@ -319,10 +327,14 @@ void decipher(char palindrome[], int length) {
         cout << "Enter rotation distance (1-25): ";
         cin >> rotations;
     } while(rotations < 0 || rotations > 25);
-    for(int i = 0; i < length; i += 2) { // Counts by two to modify every other character
+     // Counts by two to modify every other character
+    for(int i = 0; i < length; i += 2) {
         // Replaces i with the next character j times
         palindrome[i] += rotations;
-        while(palindrome[i] > 'z' || palindrome[i] < 0) { // Checks if too high, or if ASCII value is negative (because setting it too high will make it negative because it only uses the standard ASCII table)
+        // Checks if too high, or if ASCII value is negative
+        // (because setting it too high will make it negative because it
+        // only uses the standard ASCII table)
+        while(palindrome[i] > 'z' || palindrome[i] < 0) {
             palindrome[i] -= 26;
         }
     }
@@ -346,7 +358,8 @@ int toStandard(char palindrome[], int length) {
     char temp[81] = {'\0'};
     int j = 0;
     for(int i = 0; i < strlen(palindrome); i++) {
-        if((palindrome[i] >= 'a' &&  palindrome[i] <= 'z') || (palindrome [i] >= 'A' && palindrome[i] <= 'Z')) {
+        if((palindrome[i] >= 'a' && palindrome[i] <= 'z') ||
+           (palindrome[i] >= 'A' && palindrome[i] <= 'Z')) {
             temp[j] = tolower(palindrome[i]);
             j++;
         }
