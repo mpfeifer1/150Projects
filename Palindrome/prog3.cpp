@@ -155,6 +155,7 @@ int main() {
                 cout << "Enter a string: ";
                 length = getInput(phrase);
                 toStandard(phrase, length);
+                cout << phrase << endl;
                 cipher(phrase, length);
                 cout << "Palindrome cipher complete: " << phrase << endl;
                 break;
@@ -177,6 +178,11 @@ int main() {
                 break;
         }
         cout << endl;
+
+        for(int i = 0; i < strlen(phrase); i++) {
+            phrase[i] = '\0'; // Resets string to be empty
+        }
+
     } while(!quit);
 }
 
@@ -280,13 +286,15 @@ bool detective(char palindrome[], int length) {
 void cipher(char palindrome[], int length) {
     // Input rotations
     int rotations;
+    length = strlen(palindrome);
     do {
         cout << "Enter rotation distance (1-25): ";
         cin >> rotations;
     } while(rotations < 0 || rotations > 25);
+    toStandard(palindrome, length);
     for(int i = 0; i < length; i += 2) { // Counts by two to modify every other character
         palindrome[i] -= rotations;
-        if(palindrome[i] < 'a') { // Checks if too low
+        while(palindrome[i] < 'a') { // Checks if too low
             palindrome[i] += 26;
         }
     }
@@ -313,7 +321,7 @@ void decipher(char palindrome[], int length) {
     for(int i = 0; i < length; i += 2) { // Counts by two to modify every other character
         // Replaces i with the next character j times
         palindrome[i] += rotations;
-        if(palindrome[i] > 'z') { // Checks if too high
+        while(palindrome[i] > 'z' || palindrome[i] < 0) { // Checks if too high, or if ASCII value is negative (because setting it too high will make it negative because it only uses the standard ASCII table)
             palindrome[i] -= 26;
         }
     }
@@ -388,8 +396,10 @@ int getInput(char palindrome[]) {
  *****************************************************************************/
 int remove(char palindrome[], int length, int index) {
     // Slides all characters after index to the left one
-    for(int i = index; i < length; i++) {
+    int i = 0;
+    for(i = index; i < length; i++) {
         palindrome[i] = palindrome[i + 1];
     }
+    palindrome[i] = '\0';
     return length - 1;
 }
