@@ -51,6 +51,7 @@
    Oct 27, 2015  Added more comments
    Nov  1, 2015  Rewrote cipher and decipher
    Nov  4, 2015  Refactored to ASCII values, optimized toStandard
+   Nov  5, 2015  Fixed weird edge cases, like spaces in cipher and ASCII overflow in decipher
    @endverbatim
  *
  *****************************************************************************/
