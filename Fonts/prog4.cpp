@@ -72,11 +72,12 @@ int main(int argc, char* argv[]) {
             i--;
             fontLen++;
         }
-        tempFont = atoi(inputChar.substr(strlen(inputChar) - fontLen, fontLen));
+        const char *fontArray = &inputChar[strlen(inputChar) - (fontLen + 1)];
+        tempFont = atoi(fontArray);
         cout << "Font Size: " << tempFont << endl;
 
         // Get font name
-        inputChar[strlen(inputChar) - tempFont] = '\0';
+        inputChar[strlen(inputChar) - strlen(fontArray) - 1] = '\0';
         cout << "Font name: " << inputChar << endl;
 
         // Get second line
