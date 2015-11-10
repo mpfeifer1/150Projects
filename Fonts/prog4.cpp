@@ -58,7 +58,18 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-int  extractPointSize();
+int extractPointSize(char line[1001]) {
+    int j = strlen(line) - 1;
+    int fontLen = 0;
+    while(isdigit(line[j - 1])) {
+        j--;
+        fontLen++;
+    }
+    const char *fontArray = &line[strlen(line) - (fontLen + 1)];
+    line[strlen(line) - strlen(fontArray) - 1] = '\0'; // Removes font size from end of font name
+    return atoi(fontArray);
+}
+
 void sortByCost();
 void readFontData();
 
@@ -75,19 +86,9 @@ void readInputFile(ifstream& fin, char print[1001][1001], char fontName[1001][10
         index[i] = i + 1;
 
         // Get font size
-        int tempFont = 0;
-        j = strlen(inputChar) - 1;
-        int fontLen = 0;
-        while(isdigit(inputChar[j - 1])) {
-            j--;
-            fontLen++;
-        }
-        const char *fontArray = &inputChar[strlen(inputChar) - (fontLen + 1)];
-        tempFont = atoi(fontArray);
-        fontSize[i] = tempFont;
+        fontSize[i] = extractPointSize(inputChar);;
 
         // Get font name
-        inputChar[strlen(inputChar) - strlen(fontArray) - 1] = '\0';
         strcpy(fontName[i], inputChar);
 
         // Get second line
