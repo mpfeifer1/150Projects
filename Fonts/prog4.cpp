@@ -151,7 +151,7 @@ int getTonerUsed(char print[1001][1001], int fontSize[1001], int fontData[256][2
     // Loops through every char in the string
     for(int i = 0; i < 1000 && print[i] != '\0'; i++) {
         // Add the font toner cost of the selected char * (font size / 12) to get actual font cost
-        toner += getTonerCost(print[index][i], fontData) * (tempSize / 12.0);
+        toner += getTonerCost(print[index][i], fontData); // * (tempSize / 12.0);
     }
     return (int)toner;
 }
