@@ -10,7 +10,7 @@ using namespace std;
 
 // Function Prototypes
 int  extractPointSize(char line[1001]);
-void sortByCost();
+void sortByCost(char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int toner[1001], int index[1001]);
 void readFontData(ifstream& fin, char fontName[1001][1001], int fontData[256][2], int index);
 void readInputFile(ifstream& fin, char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int index[1001]);
 int  getTonerUsed(char print[1001][1001], int fontSize[1001], int fontData[256][2], int index);
@@ -60,6 +60,8 @@ int main(int argc, char* argv[]) {
         toner[i] = getTonerUsed(print, fontSize, fontData ,i);
     }
 
+    sortByCost(print, fontName, fontSize, toner, index);
+
     printUsage(print, fontName, fontSize, toner, index);
 
     return 0;
@@ -84,7 +86,43 @@ int extractPointSize(char line[1001]) {
     return atoi(fontArray);
 }
 
-void sortByCost();
+void sortByCost(char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int toner[1001], int index[1001]) {
+    // Calculate total length
+    int length = 0;
+    while(index[length] != 0) {
+        length++;
+    }
+
+    // Insertion sort all items in array
+    for(int i = 1; i < length; i++) {
+        for(int j = i; j > 0; j--) {
+            if(toner[j] < toner[j - 1]) {
+                // Swap items
+                char tempPrint[1001]    = "";
+                strcpy(tempPrint, print[j]);
+                char tempFontName[1001] = "";
+                strcpy(tempFontName, fontName[j]);
+                int  tempFontSize       = fontSize[j];
+                int  tempToner          = toner[j];
+                int  tempIndex          = index[j];
+
+                strcpy(print[j], print[j-1]);
+                strcpy(fontName[j], fontName[j-1]);
+                fontSize[j] = fontSize[j-1];
+                toner[j]    = toner[j-1];
+                index[j]    = index[j-1];
+
+                strcpy(print[j-1], tempPrint);
+                strcpy(fontName[j-1], tempFontName);
+                fontSize[j-1]   = tempFontSize;
+                toner[j-1]      = tempToner;
+                index[j-1]      = tempIndex;
+            } else {
+                break;
+            }
+        }
+    }
+}
 
 void readFontData(ifstream& fin, char fontName[1001][1001], int fontData[256][2], int index) {
     // Cleans out old font data
