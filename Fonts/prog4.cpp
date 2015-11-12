@@ -1,3 +1,56 @@
+/*************************************************************************//**
+ * @file
+ *
+ * @mainpage prog4 - Print Cost Analyzer
+ *
+ * @section course_section Course Information
+ *
+ * @author Michael Pfeifer
+ *
+ * @date 11/11/2015
+ *
+ * @par Professor:
+ *         Val Manes
+ *
+ * @par Course:
+ *         Computer Science - CSC150 - 3:00 PM
+ *
+ * @par Location:
+ *         Clasroom Building - 110
+ *
+ * @section program_section Program Information
+ *
+ * @details This program takes in a file, and calculates the price of each
+            string given using the font data files. It then sorts them from
+            least to most expensive, and writes it to a new file.
+ *
+ * @section compile_section Compiling and Usage
+ *
+ * @par Compiling Instructions:
+ *      Standard compilation
+ *
+ * @par Usage:
+   @verbatim
+   c:\> prog3.exe data.in ######FIND OUTPUT FILE########
+   or
+   g++ prog3.cpp
+   ./a.out data.in ############HERE TOO##############
+   @endverbatim
+ *
+ * @section todo_bugs_modification_section Todo, Bugs, and Modifications
+ *
+ * @par Modifications and Development Timeline:
+   @verbatim
+   Date          Modification
+   ------------  --------------------------------------------------------------
+   Nov  9, 2015  Started main method
+   Nov 10, 2015  Finished main, extracted font size, commented
+   Nov 11, 2015  Completed readFontData, getTonerUsed, cleanFont, getTonerCost,
+                 sorted, and Doxygen comments. Actually, essentially everything.
+   @endverbatim
+ *
+ *****************************************************************************/
+
 // Preprocessor Commands
 #include <iostream>
 #include <fstream>
@@ -18,6 +71,20 @@ void printUsage(char print[1001][1001], char fontName[1001][1001], int fontSize[
 void cleanFont(char font[1001]);
 int  getTonerCost(char c, int fontData[256][2]);
 
+
+/**************************************************************************//**
+ * @author Michael Pfeifer
+ *
+ * @par Description:
+ * This function calculates the costs of strings to print
+ *
+ * @param[in]       data.in     - the file to read input from
+ * @param[in][out]  #######     - the file to write output to
+ *
+ * @returns         0           - the program executed successfully
+ * @returns         false       - the program threw an error
+ *
+ *****************************************************************************/
 int main(int argc, char* argv[]) {
     // Variable Initilization
     char print      [1001][1001]    = {'\0'}; // String to print
@@ -67,6 +134,17 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
+/**************************************************************************//**
+ * @author Michael Pfeifer
+ *
+ * @par Description:
+ * This function pulls the font size out of a string
+ *
+ * @param[in][out]  line        - the string to extract from, is returned w/o size
+ *
+ * @returns         [int]       - the font size
+ *
+ *****************************************************************************/
 int extractPointSize(char line[1001]) {
     // Calculates length of the font
     int j = strlen(line) - 1;
@@ -86,6 +164,19 @@ int extractPointSize(char line[1001]) {
     return atoi(fontArray);
 }
 
+/**************************************************************************//**
+ * @author Michael Pfeifer
+ *
+ * @par Description:
+ * This function sorts (ascending) all records by the amount of toner needed
+ *
+ * @param[in][out]  print       - the string to print
+ * @param[in][out]  fontName    - the name of the font
+ * @param[in][out]  fontSize    - the size of the font
+ * @param[in][out]  toner       - the amount of toner necessary
+ * @param[in][out]  index       - the index of the record
+ *
+ *****************************************************************************/
 void sortByCost(char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int toner[1001], int index[1001]) {
     // Calculate total length
     int length = 0;
@@ -124,6 +215,18 @@ void sortByCost(char print[1001][1001], char fontName[1001][1001], int fontSize[
     }
 }
 
+/**************************************************************************//**
+ * @author Michael Pfeifer
+ *
+ * @par Description:
+ * This function takes the data from the font file and saves it to an array
+ *
+ * @param[in]       fin         - the input stream
+ * @param[in]       fontName    - the name of the font
+ * @param[in][out]  fontData    - the toner needed to print any letter in a font
+ * @param[in]       index       - the index of the record
+ *
+ *****************************************************************************/
 void readFontData(ifstream& fin, char fontName[1001][1001], int fontData[256][2], int index) {
     // Cleans out old font data
     for(int i = 0; i < 256; i++) {
@@ -155,6 +258,19 @@ void readFontData(ifstream& fin, char fontName[1001][1001], int fontData[256][2]
     fin.close();
 }
 
+/**************************************************************************//**
+ * @author Michael Pfeifer
+ *
+ * @par Description:
+ * This function reads the .in file and initializes all the necessary arrays
+ *
+ * @param[in]       fin         - the file to pull data from
+ * @param[in][out]  print       - the string to print
+ * @param[in][out]  fontName    - the name of the font
+ * @param[in][out]  fontSize    - the size of the font
+ * @param[in][out]  index       - the index of the record
+ *
+ *****************************************************************************/
 void readInputFile(ifstream& fin, char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int index[1001]) {
     // Define variables
     char inputChar[1001] = {'\0'};
@@ -183,6 +299,20 @@ void readInputFile(ifstream& fin, char print[1001][1001], char fontName[1001][10
 
 }
 
+/**************************************************************************//**
+ * @author Michael Pfeifer
+ *
+ * @par Description:
+ * This function calculates the amount of toner needed for the given string
+ *
+ * @param[in]       print       - the string to print
+ * @param[in]       fontSize    - the size of the font
+ * @param[in]       fontData    - the information for toner in a font
+ * @param[in]       index       - the index of the record
+ *
+ * @returns         [int]       - the amount of toner necessary
+ *
+ *****************************************************************************/
 int getTonerUsed(char print[1001][1001], int fontSize[1001], int fontData[256][2], int index) {
     int tempSize = fontSize[index];
     double toner = 0;
@@ -194,6 +324,19 @@ int getTonerUsed(char print[1001][1001], int fontSize[1001], int fontData[256][2
     return (int)toner;
 }
 
+/**************************************************************************//**
+ * @author Michael Pfeifer
+ *
+ * @par Description:
+ * This function prints all the records to a file
+ *
+ * @param[in]       print       - the string to print
+ * @param[in]       fontName    - the name of the font
+ * @param[in]       fontSize    - the size of the font
+ * @param[in]       toner       - the amount of toner necessary
+ * @param[in]       index       - the index of the record
+ *
+ *****************************************************************************/
 void printUsage(char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int toner[1001], int index[1001]) {
     // Loops through every index printing
     for(int i = 0; index[i] > 0; i++) {
@@ -204,6 +347,15 @@ void printUsage(char print[1001][1001], char fontName[1001][1001], int fontSize[
     }
 }
 
+/**************************************************************************//**
+ * @author Michael Pfeifer
+ *
+ * @par Description:
+ * This function makes all characers lowercase and turns spaces into unerscores
+ *
+ * @param[in][out]  font        - the font to clean
+ *
+ *****************************************************************************/
 void cleanFont(char font[1001]) {
     // Loop through all characters
     for(int i = 0; i < 1000 && font[i] != '\0'; i++) {
@@ -216,6 +368,18 @@ void cleanFont(char font[1001]) {
     }
 }
 
+/**************************************************************************//**
+ * @author Michael Pfeifer
+ *
+ * @par Description:
+ * This function finds the cost of a character in a font
+ *
+ * @param[in]       c           - the character to look up
+ * @param[in]       fontData    - the raw data from the font
+ *
+ * @returns         [int]       - the cost in toner
+ *
+ *****************************************************************************/
 int getTonerCost(char c, int fontData[256][2]) {
     // Loop through all characters
     for(int i = 0; i < 256; i++) {
