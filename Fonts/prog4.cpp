@@ -60,8 +60,8 @@ int main(int argc, char* argv[]) {
         toner[i] = getTonerUsed(print, fontSize, fontData ,i);
     }
 
+    // Sort and print records
     sortByCost(print, fontName, fontSize, toner, index);
-
     printUsage(print, fontName, fontSize, toner, index);
 
     return 0;
