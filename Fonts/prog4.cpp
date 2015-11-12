@@ -67,7 +67,7 @@ void sortByCost(char print[1001][1001], char fontName[1001][1001], int fontSize[
 void readFontData(ifstream& fin, char fontName[1001][1001], int fontData[256][2], int index);
 void readInputFile(ifstream& fin, char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int index[1001]);
 int  getTonerUsed(char print[1001][1001], int fontSize[1001], int fontData[256][2], int index);
-void printUsage(char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int toner[1001], int index[1001]);
+void printUsage(ofstream& fout, char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int toner[1001], int index[1001]);
 void cleanFont(char font[1001]);
 int  getTonerCost(char c, int fontData[256][2]);
 
@@ -113,8 +113,8 @@ int main(int argc, char* argv[]) {
     // Open file
     fin.open(argv[1]);
     if(!fin) {
-        cout << "The file didn't open" << endl;
-        return -1;
+        cout << "The input file didn't open" << endl;
+        return 1;
     }
 
     // Process data
@@ -129,7 +129,14 @@ int main(int argc, char* argv[]) {
 
     // Sort and print records
     sortByCost(print, fontName, fontSize, toner, index);
-    printUsage(print, fontName, fontSize, toner, index);
+
+    // Open output file
+    fout.open(argv[2]);
+    if(!fout) {
+        cout << "The output file didn't open" << endl;
+        return 1;
+    }
+    printUsage(fout, print, fontName, fontSize, toner, index);
 
     return 0;
 }
@@ -330,6 +337,7 @@ int getTonerUsed(char print[1001][1001], int fontSize[1001], int fontData[256][2
  * @par Description:
  * This function prints all the records to a file
  *
+ * @param[in][out]  fout        - the file to output to
  * @param[in]       print       - the string to print
  * @param[in]       fontName    - the name of the font
  * @param[in]       fontSize    - the size of the font
@@ -337,13 +345,13 @@ int getTonerUsed(char print[1001][1001], int fontSize[1001], int fontData[256][2
  * @param[in]       index       - the index of the record
  *
  *****************************************************************************/
-void printUsage(char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int toner[1001], int index[1001]) {
+void printUsage(ofstream& fout, char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int toner[1001], int index[1001]) {
     // Loops through every index printing
     for(int i = 0; index[i] > 0; i++) {
-        cout << "Record: " << index[i] << "   Font: " << fontName[i] << "   Size: " << fontSize[i] << endl;
-        cout << "Toner required: " << toner[i] << endl;
-        cout << "String: " << print[i] << endl;
-        cout << endl;
+        fout << "Record: " << index[i] << "   Font: " << fontName[i] << "   Size: " << fontSize[i] << endl;
+        fout << "Toner required: " << toner[i] << endl;
+        fout << "String: " << print[i] << endl;
+        fout << endl;
     }
 }
 
