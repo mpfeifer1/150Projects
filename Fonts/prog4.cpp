@@ -71,6 +71,8 @@ void printUsage(ofstream& fout, char print[1001][1001], char fontName[1001][1001
 void cleanFont(char font[1001]);
 int  getTonerCost(char c, int fontData[256][2]);
 
+// Global Constants
+#define MAX 1001
 
 /**************************************************************************//**
  * @author Michael Pfeifer
@@ -87,12 +89,12 @@ int  getTonerCost(char c, int fontData[256][2]);
  *****************************************************************************/
 int main(int argc, char* argv[]) {
     // Variable Initilization
-    char print      [1001][1001]    = {'\0'}; // String to print
-    char fontName   [1001][1001]    = {'\0'}; // Name of font to use
-    int  fontSize   [1001]          = {0};    // Size of font
-    int  toner      [1001]          = {0};    // Total toner necessary
-    int  index      [1001]          = {0};    // Index of record
-    int  fontData   [256][2]        = {0};    // Column 1 is ascii value as an int, column 2 is the cost in toner units
+    char print      [MAX][MAX]  = {'\0'}; // String to print
+    char fontName   [MAX][MAX]  = {'\0'}; // Name of font to use
+    int  fontSize   [MAX]       = {0};    // Size of font
+    int  toner      [MAX]       = {0};    // Total toner necessary
+    int  index      [MAX]       = {0};    // Index of record
+    int  fontData   [256][2]    = {0};    // Column 1 is ascii value as an int, column 2 is the cost in toner units
     int n = 3, i = 0, j = 0;                  // i and j are counters, n is the number of necessary arguments
 
     // Checks number of arguments
@@ -152,7 +154,7 @@ int main(int argc, char* argv[]) {
  * @returns         [int]       - the font size
  *
  *****************************************************************************/
-int extractPointSize(char line[1001]) {
+int extractPointSize(char line[MAX]) {
     // Calculates length of the font
     int j = strlen(line) - 1;
     int fontLen = 0;
@@ -184,7 +186,7 @@ int extractPointSize(char line[1001]) {
  * @param[in][out]  index       - the index of the record
  *
  *****************************************************************************/
-void sortByCost(char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int toner[1001], int index[1001]) {
+void sortByCost(char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], int toner[MAX], int index[MAX]) {
     // Calculate total length
     int length = 0;
     while(index[length] != 0) {
@@ -196,9 +198,9 @@ void sortByCost(char print[1001][1001], char fontName[1001][1001], int fontSize[
         for(int j = i; j > 0; j--) {
             if(toner[j] < toner[j - 1]) {
                 // Swap items
-                char tempPrint[1001]    = "";
+                char tempPrint[MAX]     = "";
                 strcpy(tempPrint, print[j]);
-                char tempFontName[1001] = "";
+                char tempFontName[MAX]  = "";
                 strcpy(tempFontName, fontName[j]);
                 int  tempFontSize       = fontSize[j];
                 int  tempToner          = toner[j];
@@ -234,7 +236,7 @@ void sortByCost(char print[1001][1001], char fontName[1001][1001], int fontSize[
  * @param[in]       index       - the index of the record
  *
  *****************************************************************************/
-void readFontData(ifstream& fin, char fontName[1001][1001], int fontData[256][2], int index) {
+void readFontData(ifstream& fin, char fontName[MAX][MAX], int fontData[256][2], int index) {
     // Cleans out old font data
     for(int i = 0; i < 256; i++) {
         fontData[i][0] = 0;
@@ -243,7 +245,7 @@ void readFontData(ifstream& fin, char fontName[1001][1001], int fontData[256][2]
 
     // Get filename for font
     cleanFont(fontName[index]);
-    char tempFontName[1001] = "font_data/";
+    char tempFontName[MAX] = "font_data\\"; // I haven't actually tested this because linux, but Manes says it's correct, soooooo
     strcat(tempFontName, fontName[index]);
     strcat(tempFontName, ".tnr");
     fin.open(tempFontName);
@@ -253,7 +255,7 @@ void readFontData(ifstream& fin, char fontName[1001][1001], int fontData[256][2]
 
     // Read in data to font file
     int i = 0;
-    char input[1001] = "";
+    char input[MAX] = "";
     while(fin >> input && fin.peek() != EOF) {
         fontData[i][0] = (int)input[0]; // The [0] converts the string (which will always be one char) to a character
         fin >> input;
@@ -278,9 +280,9 @@ void readFontData(ifstream& fin, char fontName[1001][1001], int fontData[256][2]
  * @param[in][out]  index       - the index of the record
  *
  *****************************************************************************/
-void readInputFile(ifstream& fin, char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int index[1001]) {
+void readInputFile(ifstream& fin, char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], int index[MAX]) {
     // Define variables
-    char inputChar[1001] = {'\0'};
+    char inputChar[MAX] = {'\0'};
     int i = 0, j = 0;
 
     while(fin && fin.peek() != EOF) {
@@ -297,7 +299,7 @@ void readInputFile(ifstream& fin, char print[1001][1001], char fontName[1001][10
         strcpy(fontName[i], inputChar);
 
         // Get second line
-        fin.getline(inputChar, 1001, '\n');
+        fin.getline(inputChar, MAX, '\n');
         strcpy(print[i], inputChar);
 
         // Increment record counter
@@ -320,7 +322,7 @@ void readInputFile(ifstream& fin, char print[1001][1001], char fontName[1001][10
  * @returns         [int]       - the amount of toner necessary
  *
  *****************************************************************************/
-int getTonerUsed(char print[1001][1001], int fontSize[1001], int fontData[256][2], int index) {
+int getTonerUsed(char print[MAX][MAX], int fontSize[MAX], int fontData[256][2], int index) {
     int tempSize = fontSize[index];
     double toner = 0;
     // Loops through every char in the string
@@ -345,7 +347,7 @@ int getTonerUsed(char print[1001][1001], int fontSize[1001], int fontData[256][2
  * @param[in]       index       - the index of the record
  *
  *****************************************************************************/
-void printUsage(ofstream& fout, char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int toner[1001], int index[1001]) {
+void printUsage(ofstream& fout, char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], int toner[MAX], int index[MAX]) {
     // Loops through every index printing
     for(int i = 0; index[i] > 0; i++) {
         fout << "Record: " << index[i] << "   Font: " << fontName[i] << "   Size: " << fontSize[i] << endl;
@@ -364,9 +366,9 @@ void printUsage(ofstream& fout, char print[1001][1001], char fontName[1001][1001
  * @param[in][out]  font        - the font to clean
  *
  *****************************************************************************/
-void cleanFont(char font[1001]) {
+void cleanFont(char font[MAX]) {
     // Loop through all characters
-    for(int i = 0; i < 1000 && font[i] != '\0'; i++) {
+    for(int i = 0; i < MAX - 1 && font[i] != '\0'; i++) {
         // Make lowercase
         font[i] = tolower(font[i]);
         // Change spaces to underscores
