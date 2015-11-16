@@ -1,0 +1,12 @@
+Record: 1   Font: misc-crackling-medium-r-normal   Size: 12
+Toner required: 0
+String: This is a short line.
+
+Record: 2   Font: misc-futura_poster-light-r-normal   Size: 24
+Toner required: 0
+String: THIS IS A LONGER, MORE EXPENSIVE LINE.
+
+Record: 3   Font: misc-cmr10-medium-r-normal   Size: 10
+Toner required: 0
+String: This is cheap.
+
