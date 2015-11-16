@@ -31,10 +31,10 @@
  *
  * @par Usage:
    @verbatim
-   c:\> prog3.exe data.in ######FIND OUTPUT FILE########
+   c:\> prog3.exe data.in results.txt
    or
    g++ prog3.cpp
-   ./a.out data.in ############HERE TOO##############
+   ./a.out data.in results.txt
    @endverbatim
  *
  * @section todo_bugs_modification_section Todo, Bugs, and Modifications
@@ -61,18 +61,18 @@
 
 using namespace std;
 
-// Function Prototypes
-int  extractPointSize(char line[1001]);
-void sortByCost(char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int toner[1001], int index[1001]);
-void readFontData(ifstream& fin, char fontName[1001][1001], int fontData[256][2], int index);
-void readInputFile(ifstream& fin, char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int index[1001]);
-int  getTonerUsed(char print[1001][1001], int fontSize[1001], int fontData[256][2], int index);
-void printUsage(ofstream& fout, char print[1001][1001], char fontName[1001][1001], int fontSize[1001], int toner[1001], int index[1001]);
-void cleanFont(char font[1001]);
-int  getTonerCost(char c, int fontData[256][2]);
-
 // Global Constants
 #define MAX 1001
+
+// Function Prototypes
+int  extractPointSize(char line[MAX]);
+void sortByCost(char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], int toner[MAX], int index[MAX]);
+void readFontData(ifstream& fin, char fontName[MAX][MAX], int fontData[256][2], int index);
+void readInputFile(ifstream& fin, char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], int index[MAX]);
+int  getTonerUsed(char print[MAX][MAX], int fontSize[MAX], int fontData[256][2], int index);
+void printUsage(ofstream& fout, char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], int toner[MAX], int index[MAX]);
+void cleanFont(char font[MAX]);
+int  getTonerCost(char c, int fontData[256][2]);
 
 /**************************************************************************//**
  * @author Michael Pfeifer
