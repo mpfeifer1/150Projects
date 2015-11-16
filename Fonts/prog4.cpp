@@ -100,11 +100,11 @@ int main(int argc, char* argv[]) {
     // Checks number of arguments
     if(argc < n) {
         cout << "Not enough arguments" << endl;
-        return -1;
+        return 1;
     }
     if(argc > n) {
         cout << "Too many arguments" << endl;
-        return -1;
+        return 1;
     }
 
 
@@ -126,7 +126,7 @@ int main(int argc, char* argv[]) {
     // Read in all necessary fonts
     for(int i = 0; index[i] != 0; i++) {
         readFontData(fin, fontName, fontData, i);
-        toner[i] = getTonerUsed(print, fontSize, fontData ,i);
+        toner[i] = getTonerUsed(print, fontSize, fontData, i);
     }
 
     // Sort and print records
@@ -245,9 +245,9 @@ void readFontData(ifstream& fin, char fontName[MAX][MAX], int fontData[256], int
     // Get filename for font
     cleanFont(fontName[index]);
     // Windows - I haven't actually tested this because Linux, but Prof. Manes says it's correct, soooooo
-    //char tempFontName[MAX] = "font_data\\";
+    char tempFontName[MAX] = "font_data\\";
     // Linux
-    char tempFontName[MAX] = "font_data/";
+    //char tempFontName[MAX] = "font_data/";
     strcat(tempFontName, fontName[index]);
     strcat(tempFontName, ".tnr");
     fin.open(tempFontName);
@@ -335,7 +335,7 @@ int getTonerUsed(char print[MAX][MAX], int fontSize[MAX], int fontData[256], int
     // Loops through every char in the string
     for(int i = 0; i < 1000 && print[i] != '\0'; i++) {
         // Add the font toner cost of the selected char * (font size / 12) to get actual font cost
-        toner += fontData[(int)print[index][i]];// * (tempSize / 12.0);
+        toner += fontData[(int)print[index][i]] * (tempSize / 12.0);
     }
     return (int)toner;
 }
