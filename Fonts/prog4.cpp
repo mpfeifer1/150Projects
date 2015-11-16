@@ -67,12 +67,12 @@ using namespace std;
 // Function Prototypes
 int  extractPointSize(char line[MAX]);
 void sortByCost(char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], int toner[MAX], int index[MAX]);
-void readFontData(ifstream& fin, char fontName[MAX][MAX], int fontData[256][2], int index);
+void readFontData(ifstream& fin, char fontName[MAX][MAX], int fontData[256], int index);
 void readInputFile(ifstream& fin, char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], int index[MAX]);
-int  getTonerUsed(char print[MAX][MAX], int fontSize[MAX], int fontData[256][2], int index);
+int  getTonerUsed(char print[MAX][MAX], int fontSize[MAX], int fontData[256], int index);
 void printUsage(ofstream& fout, char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], int toner[MAX], int index[MAX]);
 void cleanFont(char font[MAX]);
-int  getTonerCost(char c, int fontData[256][2]);
+int  getTonerCost(char c, int fontData[256]);
 
 /**************************************************************************//**
  * @author Michael Pfeifer
@@ -81,7 +81,7 @@ int  getTonerCost(char c, int fontData[256][2]);
  * This function calculates the costs of strings to print
  *
  * @param[in]       data.in     - the file to read input from
- * @param[in][out]  #######     - the file to write output to
+ * @param[in][out]  results.txt - the file to write output to
  *
  * @returns         0           - the program executed successfully
  * @returns         false       - the program threw an error
@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
     int  fontSize   [MAX]       = {0};    // Size of font
     int  toner      [MAX]       = {0};    // Total toner necessary
     int  index      [MAX]       = {0};    // Index of record
-    int  fontData   [256][2]    = {0};    // Column 1 is ascii value as an int, column 2 is the cost in toner units
+    int  fontData   [256]       = {0};    // Costs of characters in toner, sorted by ASCII
     int n = 3, i = 0, j = 0;                  // i and j are counters, n is the number of necessary arguments
 
     // Checks number of arguments
@@ -236,16 +236,18 @@ void sortByCost(char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX]
  * @param[in]       index       - the index of the record
  *
  *****************************************************************************/
-void readFontData(ifstream& fin, char fontName[MAX][MAX], int fontData[256][2], int index) {
+void readFontData(ifstream& fin, char fontName[MAX][MAX], int fontData[256], int index) {
     // Cleans out old font data
     for(int i = 0; i < 256; i++) {
-        fontData[i][0] = 0;
-        fontData[i][1] = 0;
+        fontData[i] = 0;
     }
 
     // Get filename for font
     cleanFont(fontName[index]);
-    char tempFontName[MAX] = "font_data\\"; // I haven't actually tested this because linux, but Manes says it's correct, soooooo
+    // Windows - I haven't actually tested this because Linux, but Prof. Manes says it's correct, soooooo
+    //char tempFontName[MAX] = "font_data\\";
+    // Linux
+    char tempFontName[MAX] = "font_data/";
     strcat(tempFontName, fontName[index]);
     strcat(tempFontName, ".tnr");
     fin.open(tempFontName);
@@ -255,11 +257,16 @@ void readFontData(ifstream& fin, char fontName[MAX][MAX], int fontData[256][2], 
 
     // Read in data to font file
     int i = 0;
-    char input[MAX] = "";
-    while(fin >> input && fin.peek() != EOF) {
-        fontData[i][0] = (int)input[0]; // The [0] converts the string (which will always be one char) to a character
-        fin >> input;
-        fontData[i][1] = atoi(input);
+    char inputChar = ' ';
+    int inputInt = 0;
+    while(fin >> inputChar && fin.peek() != EOF) {
+        // Gets data
+        char character = inputChar;
+        fin >> inputInt;
+        int cost = inputInt;
+
+        // Places data in array (based on character's ASCII value)
+        fontData[(int)character] = cost;
         i++;
     }
 
@@ -322,13 +329,13 @@ void readInputFile(ifstream& fin, char print[MAX][MAX], char fontName[MAX][MAX],
  * @returns         [int]       - the amount of toner necessary
  *
  *****************************************************************************/
-int getTonerUsed(char print[MAX][MAX], int fontSize[MAX], int fontData[256][2], int index) {
+int getTonerUsed(char print[MAX][MAX], int fontSize[MAX], int fontData[256], int index) {
     int tempSize = fontSize[index];
     double toner = 0;
     // Loops through every char in the string
     for(int i = 0; i < 1000 && print[i] != '\0'; i++) {
         // Add the font toner cost of the selected char * (font size / 12) to get actual font cost
-        toner += getTonerCost(print[index][i], fontData); // * (tempSize / 12.0);
+        toner += fontData[(int)print[index][i]];// * (tempSize / 12.0);
     }
     return (int)toner;
 }
@@ -376,28 +383,4 @@ void cleanFont(char font[MAX]) {
             font[i] = '_';
         }
     }
-}
-
-/**************************************************************************//**
- * @author Michael Pfeifer
- *
- * @par Description:
- * This function finds the cost of a character in a font
- *
- * @param[in]       c           - the character to look up
- * @param[in]       fontData    - the raw data from the font
- *
- * @returns         [int]       - the cost in toner
- *
- *****************************************************************************/
-int getTonerCost(char c, int fontData[256][2]) {
-    // Loop through all characters
-    for(int i = 0; i < 256; i++) {
-        // If a match is found, return the associated cost
-        if((int)c == fontData[i][0]) {
-            return fontData[i][1];
-        }
-    }
-    // Otherwise, return default of 0
-    return 0;
 }
