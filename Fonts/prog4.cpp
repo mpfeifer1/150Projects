@@ -64,13 +64,22 @@ using namespace std;
 // Global Constants
 #define MAX 1001
 
+// Struct definitions
+struct record {
+    char   print[MAX];    // String to print
+    char   fontName[MAX]; // Name of font
+    int    fontSize;      // Size of font
+    double toner;         // Amount of toner necessary
+    int    index;         // Index user entered in
+};
+
 // Function Prototypes
 int    extractPointSize(char line[MAX]);
-void   sortByCost(char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], double toner[MAX], int index[MAX]);
-void   readFontData(ifstream& fin, char fontName[MAX][MAX], int fontData[256], int index);
-void   readInputFile(ifstream& fin, char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], int index[MAX]);
-double getTonerUsed(char print[MAX][MAX], int fontSize[MAX], int fontData[256], int index);
-void   printUsage(ofstream& fout, char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], double toner[MAX], int index[MAX]);
+void   sortByCost(record records[MAX]);
+void   readFontData(ifstream& fin, record records[MAX], int fontData[256], int index);
+void   readInputFile(ifstream& fin, record records[MAX]);
+double getTonerUsed(record records[MAX], int fontData[256], int index);
+void   printUsage(ofstream& fout, record records[MAX]);
 void   cleanFont(char font[MAX]);
 
 /**************************************************************************//**
@@ -88,13 +97,9 @@ void   cleanFont(char font[MAX]);
  *****************************************************************************/
 int main(int argc, char* argv[]) {
     // Variable Initilization
-    char   print      [MAX][MAX]  = {'\0'}; // String to print
-    char   fontName   [MAX][MAX]  = {'\0'}; // Name of font to use
-    int    fontSize   [MAX]       = {0};    // Size of font
-    double toner      [MAX]       = {0};    // Total toner necessary
-    int    index      [MAX]       = {0};    // Index of record
-    int    fontData   [256]       = {0};    // Costs of characters in toner, sorted by ASCII
-    int n = 3, i = 0, j = 0;                // i and j are counters, n is the number of necessary arguments
+    static record records[MAX] = {0}; // Static so the computer doesn't overflow right away
+    int fontData[256] = {0}; // Costs of characters in toner, sorted by ASCII
+    int n = 3, i = 0, j = 0; // i and j are counters, n is the number of necessary arguments
 
     // Checks number of arguments
     if(argc < n) {
@@ -119,17 +124,17 @@ int main(int argc, char* argv[]) {
     }
 
     // Process data
-    readInputFile(fin, print, fontName, fontSize, index);
+    readInputFile(fin, records);
     fin.close(); // Close first file
 
-    // Read in all necessary fonts
-    for(int i = 0; index[i] != 0; i++) {
-        readFontData(fin, fontName, fontData, i);
-        toner[i] = getTonerUsed(print, fontSize, fontData, i);
+    // Read in all necessary fonts and calculate toner
+    for(int i = 0; records[i].index != 0; i++) {
+        readFontData(fin, records, fontData, i);
+        records[i].toner = getTonerUsed(records, fontData, i);
     }
 
     // Sort and print records
-    sortByCost(print, fontName, fontSize, toner, index);
+    sortByCost(records);
 
     // Open output file
     fout.open(argv[2]);
@@ -137,7 +142,7 @@ int main(int argc, char* argv[]) {
         cout << "The output file didn't open" << endl;
         return 1;
     }
-    printUsage(fout, print, fontName, fontSize, toner, index);
+    printUsage(fout, records);
 
     return 0;
 }
@@ -185,10 +190,10 @@ int extractPointSize(char line[MAX]) {
  * @param[in][out]  index       - the index of the record
  *
  *****************************************************************************/
-void sortByCost(char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], double toner[MAX], int index[MAX]) {
+void sortByCost(record records[MAX]) {
     // Calculate total length
     int length = 0;
-    while(index[length] != 0) {
+    while(records[length].index != 0) {
         length++;
     }
 
@@ -196,27 +201,27 @@ void sortByCost(char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX]
     // TODO change to recursive quicksort
     for(int i = 1; i < length; i++) {
         for(int j = i; j > 0; j--) {
-            if(toner[j] < toner[j - 1]) {
+            if(records[j].toner < records[j-1].toner) {
                 // Swap items
                 char   tempPrint[MAX] = "";
-                strcpy(tempPrint, print[j]);
+                strcpy(tempPrint, records[j].print);
                 char   tempFontName[MAX] = "";
-                strcpy(tempFontName, fontName[j]);
-                int    tempFontSize = fontSize[j];
-                double tempToner = toner[j];
-                int    tempIndex = index[j];
+                strcpy(tempFontName, records[j].fontName);
+                int    tempFontSize = records[j].fontSize;
+                double tempToner = records[j].toner;
+                int    tempIndex = records[j].index;
 
-                strcpy(print[j], print[j-1]);
-                strcpy(fontName[j], fontName[j-1]);
-                fontSize[j] = fontSize[j-1];
-                toner[j]    = toner[j-1];
-                index[j]    = index[j-1];
+                strcpy(records[j].print, records[j-1].print);
+                strcpy(records[j].fontName, records[j-1].fontName);
+                records[j].fontSize = records[j-1].fontSize;
+                records[j].toner    = records[j-1].toner;
+                records[j].index    = records[j-1].index;
 
-                strcpy(print[j-1], tempPrint);
-                strcpy(fontName[j-1], tempFontName);
-                fontSize[j-1]   = tempFontSize;
-                toner[j-1]      = tempToner;
-                index[j-1]      = tempIndex;
+                strcpy(records[j-1].print, tempPrint);
+                strcpy(records[j-1].fontName, tempFontName);
+                records[j-1].fontSize   = tempFontSize;
+                records[j-1].toner      = tempToner;
+                records[j-1].index      = tempIndex;
             } else {
                 break;
             }
@@ -236,19 +241,19 @@ void sortByCost(char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX]
  * @param[in]       index       - the index of the record
  *
  *****************************************************************************/
-void readFontData(ifstream& fin, char fontName[MAX][MAX], int fontData[256], int index) {
+void readFontData(ifstream& fin, record records[MAX], int fontData[256], int index) {
     // Cleans out old font data
     for(int i = 0; i < 256; i++) {
         fontData[i] = 0;
     }
 
     // Get filename for font
-    cleanFont(fontName[index]);
+    cleanFont(records[index].fontName);
     // Windows - I haven't actually tested this because Linux, but Prof. Manes says it's correct, soooooo
     // char tempFontName[MAX] = "font_data\\";
     // Linux
     char tempFontName[MAX] = "font_data/";
-    strcat(tempFontName, fontName[index]);
+    strcat(tempFontName, records[index].fontName);
     strcat(tempFontName, ".tnr");
     fin.open(tempFontName);
     if(!fin) {
@@ -287,7 +292,7 @@ void readFontData(ifstream& fin, char fontName[MAX][MAX], int fontData[256], int
  * @param[in][out]  index       - the index of the record
  *
  *****************************************************************************/
-void readInputFile(ifstream& fin, char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], int index[MAX]) {
+void readInputFile(ifstream& fin, record records[MAX]) {
     // Define variables
     char inputChar[MAX] = {'\0'};
     int i = 0, j = 0;
@@ -297,17 +302,17 @@ void readInputFile(ifstream& fin, char print[MAX][MAX], char fontName[MAX][MAX],
         fin.getline(inputChar, 1001, '\n');
 
         // Enter record number
-        index[i] = i + 1;
+        records[i].index = i + 1;
 
         // Get font size
-        fontSize[i] = extractPointSize(inputChar);
+        records[i].fontSize = extractPointSize(inputChar);
 
         // Get font name
-        strcpy(fontName[i], inputChar);
+        strcpy(records[i].fontName, inputChar);
 
         // Get second line
         fin.getline(inputChar, MAX, '\n');
-        strcpy(print[i], inputChar);
+        strcpy(records[i].print, inputChar);
 
         // Increment record counter
         i++;
@@ -329,13 +334,13 @@ void readInputFile(ifstream& fin, char print[MAX][MAX], char fontName[MAX][MAX],
  * @returns         [double]    - the amount of toner necessary
  *
  *****************************************************************************/
-double getTonerUsed(char print[MAX][MAX], int fontSize[MAX], int fontData[256], int index) {
-    int tempSize = fontSize[index];
+double getTonerUsed(record records[MAX], int fontData[256], int index) {
+    int tempSize = records[index].fontSize;
     double toner = 0;
     // Loops through every char in the string
-    for(int i = 0; i < 1000 && print[i] != '\0'; i++) {
+    for(int i = 0; i < 1000 && records[i].print != '\0'; i++) {
         // Add the font toner cost of the selected char * (font size / 12) to get actual font cost
-        toner += fontData[(int)print[index][i]] * (tempSize / 12.0);
+        toner += fontData[records[index].print[i]] * (tempSize / 12.0);
     }
     return toner;
 }
@@ -354,12 +359,12 @@ double getTonerUsed(char print[MAX][MAX], int fontSize[MAX], int fontData[256], 
  * @param[in]       index       - the index of the record
  *
  *****************************************************************************/
-void printUsage(ofstream& fout, char print[MAX][MAX], char fontName[MAX][MAX], int fontSize[MAX], double toner[MAX], int index[MAX]) {
+void printUsage(ofstream& fout, record records[MAX]) {
     // Loops through every index printing
-    for(int i = 0; index[i] > 0; i++) {
-        fout << "Record: " << index[i] << "   Font: " << fontName[i] << "   Size: " << fontSize[i] << endl;
-        fout << "Toner required: " << toner[i] << endl;
-        fout << "String: " << print[i] << endl;
+    for(int i = 0; records[i].index > 0; i++) {
+        fout << "Record: " << records[i].index << "   Font: " << records[i].fontName << "   Size: " << records[i].fontSize << endl;
+        fout << "Toner required: " << records[i].toner << endl;
+        fout << "String: " << records[i].print << endl;
         fout << endl;
     }
 }
