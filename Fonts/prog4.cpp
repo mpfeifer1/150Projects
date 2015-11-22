@@ -21,8 +21,8 @@
  * @section program_section Program Information
  *
  * @details This program takes in a file, and calculates the price of each
-            string given using the font data files. It then sorts them from
-            least to most expensive, and writes it to a new file.
+ *          string given using the font data files. It then sorts them from
+ *          least to most expensive, and writes it to a new file.
  *
  * @section compile_section Compiling and Usage
  *
@@ -30,24 +30,24 @@
  *      Standard compilation
  *
  * @par Usage:
-   @verbatim
-   c:\> prog3.exe data.in results.txt
-   or
-   g++ prog3.cpp
-   ./a.out data.in results.txt
-   @endverbatim
+ * @verbatim
+ * c:\> prog3.exe data.in results.txt
+ * or
+ * g++ prog3.cpp
+ * ./a.out data.in results.txt
+ * @endverbatim
  *
  * @section todo_bugs_modification_section Todo, Bugs, and Modifications
  *
  * @par Modifications and Development Timeline:
-   @verbatim
-   Date          Modification
-   ------------  --------------------------------------------------------------
-   Nov  9, 2015  Started main method
-   Nov 10, 2015  Finished main, extracted font size, commented
-   Nov 11, 2015  Completed readFontData, getTonerUsed, cleanFont, getTonerCost,
-                 sorted, and Doxygen comments. Actually, essentially everything.
-   @endverbatim
+ * @verbatim
+ * Date          Modification
+ * ------------  --------------------------------------------------------------
+ * Nov  9, 2015  Started main method
+ * Nov 10, 2015  Finished main, extracted font size, commented
+ * Nov 11, 2015  Completed readFontData, getTonerUsed, cleanFont, getTonerCost,
+ *               sorted, and Doxygen comments. Actually, essentially everything.
+ * @endverbatim
  *
  *****************************************************************************/
 
