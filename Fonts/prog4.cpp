@@ -132,7 +132,7 @@ int main(int argc, char* argv[]) {
         records[i].toner = getTonerUsed(records, fontData, i);
     }
 
-    // Sort and print records
+    // Sort records
     sortByCost(records);
 
     // Open output file
@@ -141,6 +141,8 @@ int main(int argc, char* argv[]) {
         cout << "The output file didn't open" << endl;
         return 1;
     }
+
+    // Print records to file
     printUsage(fout, records);
 
     return 0;
@@ -158,9 +160,11 @@ int main(int argc, char* argv[]) {
  *
  *****************************************************************************/
 int extractPointSize(char line[MAX]) {
+    // Initialize Variables
     int j = strlen(line) - 1;
     int fontLen = 0;
     char fontArray[6] = {'\0'};
+
     // Calculates length of the font
     while(isdigit(line[j - 1])) {
         fontArray[fontLen] = line[j - 1];
@@ -201,7 +205,6 @@ void sortByCost(record records[MAX]) {
     }
 
     // Insertion sort all items in array
-    // TODO change to recursive quicksort
     for(int i = 1; i < length; i++) {
         for(int j = i; j > 0; j--) {
             if(records[j].toner < records[j-1].toner) {
@@ -252,12 +255,17 @@ void readFontData(ifstream& fin, record records[MAX], int fontData[256], int ind
 
     // Get filename for font
     cleanFont(records[index].fontName);
+
     // Windows - I haven't actually tested this because Linux, but Prof. Manes says it's correct, soooooo
     char tempFontName[MAX] = "font_data\\";
     // Linux
     //char tempFontName[MAX] = "font_data/";
+
+    // Create file path
     strcat(tempFontName, records[index].fontName);
     strcat(tempFontName, ".tnr");
+
+    // Open file
     fin.open(tempFontName);
     if(!fin) {
         cout << "File not opened" << endl;
