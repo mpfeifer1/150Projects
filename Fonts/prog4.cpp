@@ -253,9 +253,9 @@ void readFontData(ifstream& fin, record records[MAX], int fontData[256], int ind
     // Get filename for font
     cleanFont(records[index].fontName);
     // Windows - I haven't actually tested this because Linux, but Prof. Manes says it's correct, soooooo
-    // char tempFontName[MAX] = "font_data\\";
+    char tempFontName[MAX] = "font_data\\";
     // Linux
-    char tempFontName[MAX] = "font_data/";
+    //char tempFontName[MAX] = "font_data/";
     strcat(tempFontName, records[index].fontName);
     strcat(tempFontName, ".tnr");
     fin.open(tempFontName);
