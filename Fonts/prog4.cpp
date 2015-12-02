@@ -111,7 +111,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-
     // Define file streams
     ifstream fin;
     ofstream fout;
@@ -159,19 +158,23 @@ int main(int argc, char* argv[]) {
  *
  *****************************************************************************/
 int extractPointSize(char line[MAX]) {
-    // Calculates length of the font
     int j = strlen(line) - 1;
     int fontLen = 0;
+    char fontArray[6] = {'\0'};
+    // Calculates length of the font
     while(isdigit(line[j - 1])) {
+        fontArray[fontLen] = line[j - 1];
         j--;
         fontLen++;
     }
 
-    // Create new array for the font
-    const char *fontArray = &line[strlen(line) - (fontLen + 1)];
+    // Reverses font size
+    for(int i = 0; i < fontLen / 2; i++) {
+        swap(fontArray[i], fontArray[fontLen - i - 1]);
+    }
 
     // Remove font size from the end of the font name
-    line[strlen(line) - strlen(fontArray) - 1] = '\0';
+    line[strlen(line) - fontLen - 2] = '\0'; // 2 accounts for space and error in fontLen
 
     // Returns font size as an integer
     return atoi(fontArray);
