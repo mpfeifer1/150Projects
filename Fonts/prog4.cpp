@@ -47,6 +47,12 @@
  * Nov 10, 2015  Finished main, extracted font size, commented
  * Nov 11, 2015  Completed readFontData, getTonerUsed, cleanFont, getTonerCost,
  *               sorted, and Doxygen comments. Actually, essentially everything.
+ * Nov 12, 2015  Refactored to use global constant
+ * Nov 16, 2015  Cleaned more code, refactored more to use MAX
+ * Nov 19, 2015  Refactored toner to be a double
+ * Nov 20, 2015  Rewrote everything to use structs
+ * Nov 22, 2015  Cleaned code and comments
+ * Dec 01, 2015  Cleaned, switched to Windows mode
  * @endverbatim
  *
  *****************************************************************************/
