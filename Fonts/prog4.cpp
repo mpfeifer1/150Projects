@@ -73,6 +73,7 @@ using namespace std;
 // Struct definitions
 struct record {
     char   print[MAX];    // String to print
+    char   fontNameOriginal[MAX];
     char   fontName[MAX]; // Name of font
     int    fontSize;      // Size of font
     double toner;         // Amount of toner necessary
@@ -134,6 +135,7 @@ int main(int argc, char* argv[]) {
 
     // Read in all necessary fonts and calculate toner
     for(int i = 0; records[i].index != 0; i++) {
+        strcpy(records[i].fontNameOriginal, records[i].fontName);
         readFontData(fin, records, fontData, i);
         records[i].toner = getTonerUsed(records, fontData, i);
     }
@@ -379,7 +381,7 @@ double getTonerUsed(record records[MAX], int fontData[256], int index) {
 void printUsage(ofstream& fout, record records[MAX]) {
     // Loops through every index printing
     for(int i = 0; records[i].index > 0; i++) {
-        fout << "Record: " << records[i].index << "   Font: " << records[i].fontName << "   Size: " << records[i].fontSize << endl;
+        fout << "Record: " << records[i].index << "   Font: " << records[i].fontNameOriginal << "   Size: " << records[i].fontSize << endl;
         fout << "Toner required: " << records[i].toner << endl;
         fout << "String: " << records[i].print << endl;
         fout << endl;
