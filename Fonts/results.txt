@@ -1,5 +1,5 @@
 Record: 3   Font: Misc-Crackling-medium-r-normal   Size: 10
-Toner required: 1815.83
+Toner required: 1815
 String: This is cheap.
 
 Record: 1   Font: misc-Futura Poster-light-r-normal   Size: 12

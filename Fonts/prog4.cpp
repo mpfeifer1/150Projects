@@ -53,6 +53,7 @@
  * Nov 20, 2015  Rewrote everything to use structs
  * Nov 22, 2015  Cleaned code and comments
  * Dec 01, 2015  Cleaned, switched to Windows mode
+ * Dec 04, 2015  Re-Doxygenned, Cast tonerRequired to an int because other people say so
  * @endverbatim
  *
  *****************************************************************************/
@@ -70,14 +71,15 @@ using namespace std;
 // Global Constants
 #define MAX 1001
 
-// Struct definitions
+// Structure Definitions
+/// Conatains a record that contains the print line
 struct record {
-    char   print[MAX];    // String to print
-    char   fontNameOriginal[MAX];
-    char   fontName[MAX]; // Name of font
-    int    fontSize;      // Size of font
-    double toner;         // Amount of toner necessary
-    int    index;         // Index user entered in
+    char   print[MAX];              /*!< String to print           */
+    char   fontNameOriginal[MAX];   /*!< Original name of font     */
+    char   fontName[MAX];           /*!< Name of font              */
+    int    fontSize;                /*!< Size of font              */
+    double toner;                   /*!< Amount of toner necessary */
+    int    index;                   /*!< Index user entered in     */
 };
 
 // Function Prototypes
@@ -267,7 +269,7 @@ void readFontData(ifstream& fin, record records[MAX], int fontData[256], int ind
     // Windows - I haven't actually tested this because Linux, but Prof. Manes says it's correct, soooooo
     char tempFontName[MAX] = "font_data\\";
     // Linux
-    //char tempFontName[MAX] = "font_data/";
+    // char tempFontName[MAX] = "font_data/";
 
     // Create file path
     strcat(tempFontName, records[index].fontName);
@@ -382,7 +384,7 @@ void printUsage(ofstream& fout, record records[MAX]) {
     // Loops through every index printing
     for(int i = 0; records[i].index > 0; i++) {
         fout << "Record: " << records[i].index << "   Font: " << records[i].fontNameOriginal << "   Size: " << records[i].fontSize << endl;
-        fout << "Toner required: " << records[i].toner << endl;
+        fout << "Toner required: " << (int)records[i].toner << endl;
         fout << "String: " << records[i].print << endl;
         fout << endl;
     }
